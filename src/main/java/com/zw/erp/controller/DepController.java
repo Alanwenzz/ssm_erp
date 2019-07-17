@@ -26,6 +26,12 @@ public class DepController {
 		return "dep";
 	}
 	
+	//页面
+	@RequestMapping("depBS")
+	public String depBS() {
+		return "depBS";
+	}
+	
 	//添加
 	@ResponseBody
 	@RequestMapping("dep_add")

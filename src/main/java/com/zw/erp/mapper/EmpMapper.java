@@ -14,4 +14,5 @@ public interface EmpMapper {
 	public void update(Emp emp);
 	public Emp get(long uuid);
 	public Emp findByUsernameAndPwd(Emp emp);
+	public void updatePwd(@Param("uuid")long uuid,@Param("txtNewPass")String txtNewPass);
 }

@@ -1,11 +1,5 @@
 package com.zw.erp.controller;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +15,10 @@ public class MenuController {
 
 	@ResponseBody
 	@RequestMapping("menu_getMenuTree")
-	public List<Menu> getMenuTree(){
+	public Menu getMenuTree(){
 		//从0读取整个表
-		List<Menu> lm = menuService.get("0");
-		return lm;
+		Menu menu = menuService.get("-1");
+		return menu;
 	}
 	
 }

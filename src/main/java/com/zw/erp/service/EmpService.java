@@ -12,5 +12,6 @@ public interface EmpService {
 	public List<Emp> findByCondition(Emp emp,Date birthday2);
 	public Emp findByUsernameAndPwd(Emp emp);
 	public Emp get(long uuid);
+	public void updatePwd(long uuid, String txtOldPass, String txtNewPass);
 }
 

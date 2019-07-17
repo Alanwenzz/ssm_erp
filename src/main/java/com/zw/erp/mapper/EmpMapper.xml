@@ -54,7 +54,12 @@
 	
 	<!-- 更新用户信息 -->
 	<update id="update" parameterType="emp" >
-	    update emp set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	    update emp set name=#{name},gender=#{gender},tele=#{tele},address=#{address},email=#{email},birthday=#{birthday} where uuid=#{uuid}    
+	</update>   
+	
+	<!-- 更新用户密码 -->
+	<update id="updatePwd">
+	    update emp set password=#{txtNewPass} where uuid=#{uuid}    
 	</update>   
    
 </mapper>

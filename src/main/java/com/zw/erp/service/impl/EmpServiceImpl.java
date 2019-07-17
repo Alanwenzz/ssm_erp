@@ -42,6 +42,20 @@ public class EmpServiceImpl implements EmpService{
 	public Emp get(long uuid) {
 		// TODO Auto-generated method stub
 		return empMapper.get(uuid);
+	}
+
+	public void updatePwd(long uuid, String txtOldPass, String txtNewPass) {
+		// TODO Auto-generated method stub
+		Emp emp=empMapper.get(uuid);
+		if(emp.getPassword()!=txtOldPass) {
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		empMapper.updatePwd(uuid,txtNewPass);
 	} 
 	
 }

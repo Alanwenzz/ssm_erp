@@ -1,60 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>员工管理</title>
-<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
-<script type="text/javascript" src="ui/jquery.min.js"></script>
-<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
-<script type="text/javascript" src="ui/date.js"></script>
-<script type="text/javascript" src="js/crud.js"></script>
-<script type="text/javascript">
-	var name="dep";
-	var height = 300;
-	var width = 300;
-	var columns=[[
-	  		    {field:'uuid',title:'编号',width:100},
-	  		    {field:'name',title:'姓名',width:100},
-	  		    {field:'tele',title:'联系电话',width:100},
-				{field:'-',title:'操作',width:200,formatter: function(value,row,index){
-					var oper = "<a href=\"javascript:void(0)\" onclick=\"edit(" + row.uuid + ')">修改</a>';
-					oper += ' <a href="javascript:void(0)" onclick="del(' + row.uuid + ')">删除</a>';
-					return oper;
-				}}
-				]];
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+	
 
-</script>
 </head>
 <body>
-<div class="easyui-panel" style="padding-left:4px;border-bottom:0px;">
-	<div style="height:2px;"></div>
-	<form id="searchForm">
-	部门名称：<input name="name" >
-	联系电话：<input name="tele" >
-	<button id="btnSearch" type="button">查询</button>
-	</form>
-	<div style="height:2px;"></div>
+	
+<div class="container">
+    <h1>平台管理</h1>
+    <p class="toolbar">
+        <a class="create btn btn-default" href="javascript:">Create Item</a>
+        <span class="alert"></span>
+    </p>
+    <table id="table"
+           data-show-refresh="true"
+           data-show-columns="true"
+           data-search="true"
+           data-query-params="queryParams"
+           data-toolbar=".toolbar">
+        <thead>
+        <tr>
+            <th data-field="uuid">编号</th>
+            <th data-field="name">部门名称</th>
+            <th data-field="tele">联系电话</th>
+            <th data-field="action"
+                data-align="center"
+                data-formatter="actionFormatter"
+                data-events="actionEvents">Action
+            </th>
+        </tr>
+        </thead>
+    </table>
 </div>
-<table id="grid"></table>
+ 
+<div id="modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">desc</span>
+                    <input class="form-control" type="text" name="desc" id="desc">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">channel</span>
+                    <input class="form-control" type="number" name="channel" id="channel">
+                </div>
+                <div class="input-group">
+ 
+                    <span class="input-group-addon">appcode</span>
+                    <input class="form-control" type="text" name="appcode" id="appcode">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">cliientType</span>
+                    <input class="form-control" type="text" name="cliientType" id="cliientType">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">responseType</span>
+                    <input class="form-control" type="text" name="responseType" id="responseType">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">dmpType</span>
+                    <input class="form-control" type="text" name="dmpType" id="dmpType">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">idea</span>
+                    <input class="form-control" type="text" name="idea" id="idea">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">idea2</span>
+                    <input class="form-control" type="text" name="idea2" id="idea2">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">state</span>
+                    <input class="form-control" type="text" name="state" id="state">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary submit">Submit</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+	
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
 
-<div id="editDlg">
-	<form id="editForm">
-		<input name="uuid" type="hidden"> 
 
-		<table>
-			<tr>
-				<td>部门名称</td><td><input name="name"> </td>
-			</tr>
-			<tr>
-				<td>联系电话</td><td><input name="tele"> </td>
-			</tr>
-		</table>
-		<button id="btnSave" type="button">保存</button>
-	</form>
-</div>
+<script> 
+ 
+    var $table = $('#table').bootstrapTable({
+                url: "platform/getList",
+                toolbar: '#toolbar', //工具按钮用哪个容器
+                //striped: true, //是否显示行间隔色
+                cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true, //是否显示分页
+                sortable: true, //是否启用排序
+                sortOrder: "asc", //排序方式
+                //queryParams: postQueryParams,//传递参数（*）
+                //sidePagination: "server",      //分页方式：client客户端分页，server服务端分页（*）
+                pageSize: 10, //每页的记录行数（*）
+                pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+                strictSearch: true,
+//            height: table_h, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度,设置了行高后编辑时标头宽度不会随着下面的行改变，且颜色也不会改变？？？？
+                uniqueId: "id", //每一行的唯一标识，一般为主键列
+                cardView: false, //是否显示详细视图
+                detailView: false, //是否显示父子表
+                paginationHAlign: "left",
+                singleSelect: true,
+                search: true,               //是否显示表格搜索，此搜索是客户端搜索，不会进服务端
+                //strictSearch: true,
+                showColumns: true, //是否显示所有的列
+                showRefresh: true, //是否显示刷新按钮
+                clickToSelect: true, //是否启用点击选中行
+                paginationPreText: "<<",
+                paginationNextText: ">>"
+            }),
+            $modal = $('#modal').modal({show: false}),
+            $alert = $('.alert').hide();
+ 
+    $(function () {
+        // create event
+        $('.create').click(function () {
+            showModal($(this).text());
+        });
+ 
+        $modal.find('.submit').click(function () {
+            var row = {};
+            $modal.find('input[name]').each(function () {
+                row[$(this).attr('name')] = $(this).val();
+            });
+            $.ajax({
+//                url: API_URL + ($modal.data('id') || ''),
+                url: "platform/add",
+                type: "post",
+//                type: $modal.data('id') ? 'put' : 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(row),
+                success: function () {
+                    $modal.modal('hide');
+                    $table.bootstrapTable('refresh');
+                    showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item successful!', 'success');
+                },
+                error: function () {
+                    $modal.modal('hide');
+                    showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item error!', 'danger');
+                }
+            });
+        });
+    });
+ 
+    function queryParams(params) {
+        return {};
+    }
+ 
+    function actionFormatter(value) {
+        return [
+            '<a class="update" href="javascript:" title="Update Item"><i class="glyphicon glyphicon-edit"></i></a>',
+            '<a class="remove" href="javascript:" title="Delete Item"><i class="glyphicon glyphicon-remove-circle"></i></a>',
+        ].join('');
+    }
+ 
+    // update and delete events
+    window.actionEvents = {
+        'click .update': function (e, value, row) {
+            showModal($(this).attr('title'), row);
+        },
+        'click .remove': function (e, value, row) {
+            if (confirm('Are you sure to delete this item?')) {
+                $.ajax({
+                    url: "platform/del?appcode=" + row.code,
+                    type: 'delete',
+                    success: function () {
+                        $table.bootstrapTable('refresh');
+                        showAlert('Delete item successful!', 'success');
+                    },
+                    error: function () {
+                        showAlert('Delete item error!', 'danger');
+                    }
+                })
+            }
+        }
+    };
+ 
+    function showModal(title, row) {
+        row = row || {
+                    id: '',
+                    state: 0
+                }; // default row value
+        $modal.data('id', row.code);
+        $modal.find('.modal-title').text(title);
+        for (var name in row) {
+            $modal.find('input[name="' + name + '"]').val(row[name]);
+        }
+        $modal.modal('show');
+    }
+ 
+    function showAlert(title, type) {
+        $alert.attr('class', 'alert alert-' + type || 'success')
+                .html('<i class="glyphicon glyphicon-check"></i> ' + title).show();
+        setTimeout(function () {
+            $alert.hide();
+        }, 3000);
+    }
+</script>
 
 </body>
 </html>

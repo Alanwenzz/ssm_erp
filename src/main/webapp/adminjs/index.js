@@ -44,9 +44,6 @@ $(function(){
 	$('#loginOut').bind('click',function(){
 		$.ajax({
 			url: 'login_loginOut',
-			success: function(){
-				location.href="login.html";
-			}
 		});
 	});
 	
@@ -69,7 +66,7 @@ function showName(){
 			if(rtn.success){
 				$('#username').html(rtn['message']);
 			}else{
-				location.href="login.html";
+				location.href="login";
 			}
 		}
 	});
