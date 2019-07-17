@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.EmpMapper">
+
+    <!-- 根据邮箱密码查找当前用户信息 -->
+    <select id="findByUsernameAndPwd" resultType="Emp" > 
+        select * from emp where email = #{email} and password = #{password}
+    </select>
+    
+     <!-- 根据条件查找用户信息 -->
+    <select id="findByCondition" resultType="Emp" > 
+        select * from emp where 1=1
+        <if test="emp!=null">
+        	<if test="emp.name!=null">
+        		and name like concat('%',#{emp.name},'%')
+        	</if>
+        	<if test="emp.gender!=null">
+        		and gender = #{emp.gender}
+        	</if>
+        	<if test="emp.tele!=null">
+        		and tele like concat('%',#{emp.tele},'%')
+        	</if>
+        	<if test="emp.address!=null">
+        		and address like concat('%',#{emp.address},'%')
+        	</if>
+        	<if test="emp.email!=null">
+        		and email like concat('%',#{emp.email},'%')
+        	</if>
+        	<if test="emp.birthday!=null">
+        		and birthday &gt; #{emp.birthday}
+        	</if>
+        </if>
+        <if test="birthday2!=null">
+        	and birthday &lt; #{birthday2}
+        </if>
+        
+    </select>
+    
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultType="Emp" > 
+        select * from emp where uuid = #{uuid}
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Emp"> 
+        insert into emp (name,gender,tele,address,email,birthday) 
+        values (#{name},#{gender},#{tele},#{address},#{email}#{birthday});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from emp where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="emp" >
+	    update emp set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	</update>   
+   
+</mapper>
