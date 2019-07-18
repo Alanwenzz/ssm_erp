@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/all.css" />
+<link href="css/bootstrap-table.min.css" rel="stylesheet">
+<style>
+	#add_btn,.buttons-toolbar{margin-top:5px;}
+</style>
+</head>
+<body>
+	<!-- 按钮工具栏 -->
+	<div class="buttons-toolbar"></div>
+	
+	<!-- 打开添加窗口 -->
+	<div id="toolbar">
+	  <button id="add_btn" class="btn btn-primary btn-lg" onclick="add()" data-toggle="modal" data-target="#modalTable">
+	    <i class="glyphicon glyphicon-remove"></i> Add
+	  </button>
+	</div>
+
+	<!-- 编辑窗口 -->
+	<div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form id="save_form">
+	          	<p class="text-muted">部门名称:</p>
+	          	<input type="text" name="name" id="name" class="form-control" value=""><br/>
+	         	<p class="text-muted">部门电话:</p>
+	         	<input type="text" name="tele" id="tele" class="form-control" value=""><br/>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="save_btn" class="btn btn-secondary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 主表格 -->	
+	<table data-toolbar="#toolbar"
+		  data-search="true"
+		  data-show-refresh="true"
+		  data-show-toggle="true"
+		  data-show-fullscreen="true"
+		  data-show-columns="true"
+		  data-show-export="true"
+		  data-click-to-select="true"
+		  data-minimum-count-columns="2"
+		  data-show-pagination-switch="true"
+		  data-pagination="true"
+  		  data-buttons-toolbar=".buttons-toolbar" id="table">
+  	</table>	
+	
+	
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+ 	<script src="js/bootstrap-table.min.js"></script>
+ 	<script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+		
+	<script>
+	    var method="add";
+
+		$('#table').bootstrapTable({
+		  url: 'dep_getList',
+		  striped : true, //是否显示行间隔色
+		  pageNumber : 1, //初始化加载第一页
+		  pagination : true,//是否分页
+		  sidePagination : 'client',//server:服务器端分页|client：前端分页
+		  pageSize : 5,//单页记录数
+		  pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+		  showRefresh : true,//刷新按钮
+		  columns: [{
+		    field: 'uuid',
+		    title: '编号',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  }, {
+		    field: 'name',
+		    title: '部门名称',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  }, {
+		    field: 'tele',
+		    title: '部门电话',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  },{
+		    field: '-',
+		    title:'操作',width:200,formatter: function(value,row,index){
+				var oper = "<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#modalTable\" href=\"javascript:void(0)\" onclick=\"edit(" + row.uuid + ")\">修改</button>";
+				oper += "&nbsp;<button type=\"button\" class=\"btn btn-danger\" href=\"javascript:void(0)\" onclick=\"del(" + row.uuid + ")\">删除</button>";
+				return oper;
+		    }
+		  }]
+		})
+	</script>	
+	<script>
+		var $save_form = $('#save_form')
+		var $table = $('#table')
+		var $save_btn = $('#save_btn')
+		//获取表单元素
+		var $name=$('#name')
+		var $tele=$('#tele')
+		
+		//添加
+		function add(){
+			//设置保存按钮提交的方法为add
+			method="add";
+			$name.val("");
+			$tele.val("");
+		}
+		
+		//修改
+		function edit(eid){
+			//设置保存按钮提交的方法为update
+			method="update?uuid="+eid;
+		
+			//加载数据
+			$.ajax({
+				url: 'dep_'+'get?uuid=' + eid,
+				dataType: 'json',
+				type: 'post',
+				success:function(rtn){
+					$name.val(rtn.name);
+					$tele.val(rtn.tele)
+				}
+			})
+		}
+		
+		//保存
+		$(function() {
+		    $save_btn.click(function () {
+		    	var formData = $save_form.serializeJSON();
+		    	$.ajax({
+					url: 'dep_'+method,
+					data: formData,
+					dataType: 'json',
+					type: 'post',
+					success:function(rtn){
+						$table.bootstrapTable('refresh');
+					}
+				})
+		    })
+		})
+		
+		//删除
+		function del(eid){
+			$.ajax({
+				url: 'dep_delete?uuid=' + eid,
+				dataType: 'json',
+				type: 'post',
+				success:function(rtn){
+					$table.bootstrapTable('refresh');
+				}
+			});
+		}
+		
+		$(function() {
+	    	$('#modalTable').on('shown.bs.modal', function () {
+	        	$save_form.bootstrapTable('resetView');
+    	})
+  })
+</script>
+</body>
+</html>

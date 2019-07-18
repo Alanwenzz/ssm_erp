@@ -70,7 +70,7 @@ public class LoginController {
 	//ĞŞ¸ÄÃÜÂë
 	@ResponseBody
 	@RequestMapping("emp_updatePwd")
-	public Map<String, Object> updatePwd(String txtOldPass,String txtNewPass){
+	public Map<String, Object> updatePwd(String oldPwd,String newPwd){
 		Map<String, Object> rtn;
 		Emp loginUser = (Emp) httpSession.getAttribute("loginUser");
 		//sessionæ˜¯å¦ä¼šè¶…æ—¶ï¼Œç”¨æˆ·æ˜¯å¦ç™»é™†è¿‡äº†
@@ -79,7 +79,7 @@ public class LoginController {
 			return rtn;
 		}
 		try {
-			empService.updatePwd(loginUser.getUuid(), txtOldPass, txtNewPass);
+			empService.updatePwd(loginUser.getUuid(), oldPwd, newPwd);
 			rtn=ajaxReturn(true, "ĞŞ¸ÄÃÜÂë³É¹¦");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/zw/erp/controller/DepController.java=UTF-8
 encoding//src/main/java/com/zw/erp/controller/EmpController.java=UTF-8
+encoding//src/main/java/com/zw/erp/controller/GoodsController.java=UTF-8
 encoding//src/main/java/com/zw/erp/controller/MenuController.java=UTF-8
 encoding//src/main/java/com/zw/erp/pojo/Menu.java=UTF-8
 encoding//src/main/java/com/zw/erp/pojo/Orders.java=UTF-8

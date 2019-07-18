@@ -12,33 +12,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zw.erp.pojo.Dep;
-import com.zw.erp.service.DepService;
+import com.zw.erp.pojo.Goods;
+import com.zw.erp.service.GoodsService;
 
 @Controller
-public class DepController {
+public class GoodsController {
 	@Autowired
-	private DepService depService;
+	private GoodsService goodsService;
 	
 	//页面
-	@RequestMapping("dep")
-	public String dep() {
-		return "dep";
+	@RequestMapping("goods")
+	public String goods() {
+		return "goods";
 	}
 	
 	//页面
-	@RequestMapping("depM")
-	public String depBS() {
-		return "depM";
+	@RequestMapping("goodsBS")
+	public String goodsBS() {
+		return "goodsBS";
 	}
 	
 	//添加
 	@ResponseBody
-	@RequestMapping("dep_add")
-	public Map<String, Object> add(Dep dep){
+	@RequestMapping("goods_add")
+	public Map<String, Object> add(Goods goods){
 		Map<String, Object> rtn;
 		try {
-			depService.add(dep);
+			goodsService.add(goods);
 			rtn=ajaxReturn(true, "添加成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -48,11 +48,11 @@ public class DepController {
 	}
 	//删除
 	@ResponseBody
-	@RequestMapping("dep_delete")
+	@RequestMapping("goods_delete")
 	public Map<String, Object> delete(long uuid){
 		Map<String, Object> rtn;
 		try {
-			depService.delete(uuid);
+			goodsService.delete(uuid);
 			rtn=ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -62,11 +62,11 @@ public class DepController {
 	}
 	//修改
 	@ResponseBody
-	@RequestMapping("dep_update")
-	public Map<String, Object> update(Dep dep){
+	@RequestMapping("goods_update")
+	public Map<String, Object> update(Goods goods){
 		Map<String, Object> rtn;
 		try {
-			depService.update(dep);
+			goodsService.update(goods);
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -77,17 +77,17 @@ public class DepController {
 	
 	//根据id查询部门信息
 	@ResponseBody
-	@RequestMapping("dep_get")
-	public Dep get(long uuid){
-		Dep dep=depService.get(uuid);
-		return dep;
+	@RequestMapping("goods_get")
+	public Goods get(long uuid){
+		Goods goods=goodsService.get(uuid);
+		return goods;
 	}
 	
 	//查询
 	@ResponseBody
-	@RequestMapping("dep_getList")
-	public List<Dep> getList(Dep dep){
-		List<Dep> ld=depService.findByCondition(dep);
+	@RequestMapping("goods_getList")
+	public List<Goods> getList(Goods goods){
+		List<Goods> ld=goodsService.findByCondition(goods);
 		return ld;
 	}
 	

@@ -1,6 +1,6 @@
 $(function(){
 	
-	var url = 'orders_findAll';
+	var url = 'orders_getList';
 	
 	var btnText = "";
 	var inoutTitle = "";
