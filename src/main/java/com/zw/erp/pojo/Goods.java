@@ -16,6 +16,13 @@ public class Goods {
 	private String unit;
 	private Double inprice;
 	private Double outprice;
+	private Long goodstype_uuid;
+	public Long getGoodstype_uuid() {
+		return goodstype_uuid;
+	}
+	public void setGoodstype_uuid(Long goodstype_uuid) {
+		this.goodstype_uuid = goodstype_uuid;
+	}
 	private Goodstype goodstype;
 
 	public Goodstype getGoodstype() {

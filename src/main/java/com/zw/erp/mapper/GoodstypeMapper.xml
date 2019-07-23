@@ -9,10 +9,7 @@
     
     <!-- 根据条件查找用户信息 -->
     <select id="findByCondition" resultType="Goodstype" > 
-        select * from goodstype where 1=1
-        <if test="name!=null">
-        	and name like concat('%',#{name},'%')
-        </if>
+        select * from goodstype 
     </select>
     
 	<!-- 添加用户信息 -->

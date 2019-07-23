@@ -70,7 +70,7 @@ public class GoodsController {
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "更新失败");
+			rtn=ajaxReturn(false, "更新失败");
 		}
 		return rtn;
 	}
@@ -92,12 +92,12 @@ public class GoodsController {
 //	}
 	
 	//查询
-		@ResponseBody
-		@RequestMapping("goods_getList")
-		public List<Goods> getList(){
-			List<Goods> ld=goodsService.getList();
-			return ld;
-		}
+	@ResponseBody
+	@RequestMapping("goods_getList")
+	public List<Goods> getList(){
+		List<Goods> ld=goodsService.getList();
+		return ld;
+	}
 	
 	//ajax返回
 	public Map<String, Object> ajaxReturn(boolean success,String message){

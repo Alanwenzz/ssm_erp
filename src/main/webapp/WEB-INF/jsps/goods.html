@@ -34,8 +34,8 @@
 	      </div>
 	      <div class="modal-body">
 	        <form id="save_form">
-	          	<p class="text-muted">名称:</p>
-	          	<input type="text" name="name" id="name" class="form-control" value=""><br/>
+	        	<p class="text-muted">名称:</p>
+	         	<input type="text" name="name" id="name" class="form-control" value=""><br/>	          	
 	         	<p class="text-muted">产地:</p>
 	         	<input type="text" name="origin" id="origin" class="form-control" value=""><br/>
 	         	<p class="text-muted">厂家:</p>
@@ -46,8 +46,11 @@
 	         	<input type="text" name="inprice" id="inprice" class="form-control" value=""><br/>
 	         	<p class="text-muted">销售价格:</p>
 	         	<input type="text" name="outprice" id="outprice" class="form-control" value=""><br/>
+	         	
+	         	<!-- 下拉列表 -->
 	         	<p class="text-muted">商品类型:</p>
-	         	<input type="text" name="goodstype" id="goodstype" class="form-control" value=""><br/>
+	         	<select  id="goodstype" class="form-control" name="goodstype_uuid" >                      
+				</select>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
@@ -153,6 +156,22 @@
 		    }
 		  }]
 		})
+		
+		$(function() {
+	    	$.ajax({  
+                url : "goodstype_getList", //所需要的列表接口地址  
+                type : "post",  
+                dataType : "json",  
+                success : function(result) { 
+                	 var h = "";  
+                     $.each(result, function(index, value) {
+                         h += "<option value='" + value.uuid + "'>" + value.name //下拉框序言的循环数据
+                         + "</option>";
+                     });
+                     $("#goodstype").append(h);//append 添加进去并展示  
+                }
+            })
+    	})
 	</script>	
 	<script>
 		var $save_form = $('#save_form')
@@ -166,7 +185,7 @@
 		var $inprice=$('#inprice')
 		var $outprice=$('#outprice')
 		var $goodstype=$('#goodstype')
-		
+
 		//添加
 		function add(){
 			//设置保存按钮提交的方法为add
@@ -177,7 +196,7 @@
 			$unit.val("");
 			$inprice.val("");
 			$outprice.val("");
-			$goodstype.val("");
+			$goodstype.empty();
 		}
 		
 		//修改
@@ -197,7 +216,8 @@
 					$unit.val(rtn.unit);
 					$inprice.val(rtn.inprice);
 					$outprice.val(rtn.outprice);
-					$goodstype.val(rtn.goodstype.name);
+					$goodstype.find("option:selected")[0].selected=false;
+					$goodstype.find("option[value="+rtn.goodstype.uuid+"]").attr("selected",true);
 				}
 			})
 		}

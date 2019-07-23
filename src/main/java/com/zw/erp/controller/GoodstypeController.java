@@ -60,7 +60,7 @@ public class GoodstypeController {
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "更新失败");
+			rtn=ajaxReturn(false, "更新失败");
 		}
 		return rtn;
 	}
