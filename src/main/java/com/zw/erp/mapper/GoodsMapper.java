@@ -9,4 +9,5 @@ public interface GoodsMapper {
 	public void delete(long uuid);
 	public void update(Goods goods);
 	public Goods get(long uuid);
+	public List<Goods> getList();
 }

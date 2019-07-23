@@ -34,7 +34,6 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping("login_checkUser")
 	public Map<String, Object> checkUser(Emp emp) {
-		System.out.println(emp.getName()+" "+emp.getPassword());
 		Map<String, Object> rtn;
 		try{
 			Emp loginUser = empService.findByUsernameAndPwd(emp);

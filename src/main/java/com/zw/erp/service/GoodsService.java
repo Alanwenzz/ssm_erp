@@ -8,4 +8,5 @@ public interface GoodsService {
 	public void update(Goods goods);
 	public List<Goods> findByCondition(Goods goods);
 	public Goods get(long uuid);
+	public List<Goods> getList();
 }

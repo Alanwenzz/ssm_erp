@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.zw.erp.pojo.Emp;
+import com.zw.erp.pojo.Menu;
 
 public interface EmpService {
 	public void add(Emp emp);
@@ -13,5 +14,7 @@ public interface EmpService {
 	public Emp findByUsernameAndPwd(Emp emp);
 	public Emp get(long uuid);
 	public void updatePwd(long uuid, String txtOldPass, String txtNewPass);
+	public List<Menu> getMenuByEmpuuid(long id);
+	public Menu readMenusByEmpuuid(long id);
 }
 

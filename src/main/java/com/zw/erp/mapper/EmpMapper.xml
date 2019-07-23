@@ -60,6 +60,13 @@
 	<!-- 更新用户密码 -->
 	<update id="updatePwd">
 	    update emp set password=#{txtNewPass} where uuid=#{uuid}    
-	</update>   
+	</update>
+	
+	<!-- 根据邮箱密码查找当前用户信息 -->
+    <select id="getMenuByEmpuuid" resultType="Menu" > 
+        select m.* from emp e join emp_role er join role_menu rm join menu m 
+        where  e.uuid=er.emp_uuid and er.roles_uuid=rm.role_uuid and rm.menus_menuid=m.menuid 
+        and  e.uuid=#{id}
+    </select>   
    
 </mapper>

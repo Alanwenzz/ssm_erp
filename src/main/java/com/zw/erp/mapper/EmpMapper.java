@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.zw.erp.pojo.Emp;
+import com.zw.erp.pojo.Menu;
 
 public interface EmpMapper {
 	public List<Emp> findByCondition(@Param("emp")Emp emp, @Param("birthday2")Date birthday2);
@@ -15,4 +16,5 @@ public interface EmpMapper {
 	public Emp get(long uuid);
 	public Emp findByUsernameAndPwd(Emp emp);
 	public void updatePwd(@Param("uuid")long uuid,@Param("txtNewPass")String txtNewPass);
+	public List<Menu> getMenuByEmpuuid(Long id);
 }

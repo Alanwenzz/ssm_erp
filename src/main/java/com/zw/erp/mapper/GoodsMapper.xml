@@ -1,36 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zw.erp.mapper.GoodsMapper">
-    
-    <!-- 根据Id查找当前用户信息 -->
-    <select id="get" resultType="Goods" > 
-        select * from goods where uuid = #{uuid}
+
+    <resultMap type="Goods" id="goodsBean">
+        <id column="uuid" property="uuid" />
+        <result column="name" property="name" />
+        <result column="origin" property="origin" />
+        <result column="producer" property="producer" />
+        <result column="unit" property="unit" />
+        <result column="inprice" property="inprice" />
+        <result column="outprice" property="outprice" />
+ 
+        <!-- 多对一的关系 -->
+        <!-- property: 指的是属性名称, javaType：指的是属性的类型 -->
+        <association property="goodstype" javaType="Goodstype">
+            <id column="gtuuid" property="uuid"/>
+            <result column="gtname" property="name"/>
+        </association>
+    </resultMap>
+     
+    <!-- 查找所用水果信息 -->
+    <select id="getList" resultMap="goodsBean" > 
+        select g.*,gt.uuid 'gtuuid',gt.name 'gtname' from goods g left join goodstype gt on g.goodstype_uuid=gt.uuid
     </select>
     
-    <!-- 根据条件查找用户信息 -->
-    <select id="findByCondition" resultType="Goods" > 
+    <!-- 根据Id查找当前水果信息 -->
+    <select id="get" resultMap="goodsBean" > 
+        select g.*,gt.uuid 'gtuuid',gt.name 'gtname' from goods g left join goodstype gt on g.goodstype_uuid=gt.uuid where g.uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找水果信息 -->
+    <select id="findByCondition" resultMap="goodsBean" > 
         select * from goods where 1=1
         <if test="name!=null">
         	and name like concat('%',#{name},'%')
         </if>
-        <if test="tele!=null">
-        	and tele like concat('%',#{tele},'%')
-        </if>
     </select>
     
-	<!-- 添加用户信息 -->
+	<!-- 添加水果信息 -->
     <insert id="insert" parameterType="Goods"> 
-        insert into goods (name,tele) values (#{name},#{tele});
+        insert into goods(name,origin,producer,unit,inprice,outprice,goodstype_uuid) 
+        values(#{name},#{origin},#{producer},#{unit},#{inprice},#{outprice},#{goodstype_uuid});
     </insert>
    	
-   	<!-- 删除用户 -->
+   	<!-- 删除水果 -->
 	<delete id="delete" parameterType="long" >
-	    delete from goods where uuid= #{uuid}   
+	    delete from goods where uuid= #{uuid}
 	</delete>
 	
-	<!-- 更新用户信息 -->
+	<!-- 更新水果信息 -->
 	<update id="update" parameterType="goods" >
-	    update goods set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	    update goods 
+	    set name=#{name},origin=#{origin},producer=#{producer},unit=#{unit},inprice=#{inprice},outprice=#{outprice},goodstype_uuid=#{goodstype_uuid} 
+	    where uuid=#{uuid}    
 	</update>   
    
 </mapper>

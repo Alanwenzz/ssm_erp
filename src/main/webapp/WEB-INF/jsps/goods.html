@@ -34,10 +34,20 @@
 	      </div>
 	      <div class="modal-body">
 	        <form id="save_form">
-	          	<p class="text-muted">部门名称:</p>
+	          	<p class="text-muted">名称:</p>
 	          	<input type="text" name="name" id="name" class="form-control" value=""><br/>
-	         	<p class="text-muted">部门电话:</p>
-	         	<input type="text" name="tele" id="tele" class="form-control" value=""><br/>
+	         	<p class="text-muted">产地:</p>
+	         	<input type="text" name="origin" id="origin" class="form-control" value=""><br/>
+	         	<p class="text-muted">厂家:</p>
+	         	<input type="text" name="producer" id="producer" class="form-control" value=""><br/>
+	         	<p class="text-muted">计量单位:</p>
+	         	<input type="text" name="unit" id="unit" class="form-control" value=""><br/>
+	         	<p class="text-muted">进货价格:</p>
+	         	<input type="text" name="inprice" id="inprice" class="form-control" value=""><br/>
+	         	<p class="text-muted">销售价格:</p>
+	         	<input type="text" name="outprice" id="outprice" class="form-control" value=""><br/>
+	         	<p class="text-muted">商品类型:</p>
+	         	<input type="text" name="goodstype" id="goodstype" class="form-control" value=""><br/>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
@@ -64,7 +74,7 @@
 	
 	
 	<script src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+	<script src="js/jquery.serializejson.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
  	<script src="js/bootstrap-table.min.js"></script>
@@ -72,10 +82,10 @@
 
 		
 	<script>
-	    var method="add";
+	    var method="";
 
 		$('#table').bootstrapTable({
-		  url: 'dep_getList',
+		  url: 'goods_getList',
 		  striped : true, //是否显示行间隔色
 		  pageNumber : 1, //初始化加载第一页
 		  pagination : true,//是否分页
@@ -91,16 +101,49 @@
 	        valign: 'middle'
 		  }, {
 		    field: 'name',
-		    title: '部门名称',
+		    title: '名称',
 		    sortable:"true",
 		    align: 'center',
 	        valign: 'middle'
 		  }, {
-		    field: 'tele',
-		    title: '部门电话',
+		    field: 'origin',
+		    title: '产地',
 		    sortable:"true",
 		    align: 'center',
 	        valign: 'middle'
+		  },{
+		    field: 'producer',
+		    title: '厂家',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  },{
+		    field: 'unit',
+		    title: '计量单位',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  },{
+		    field: 'inprice',
+		    title: '进货价格',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  },{
+		    field: 'outprice',
+		    title: '销售价格',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  },{
+		    field: 'goodstype',
+		    title: '商品类别',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle',
+	        formatter:function(value){
+  		    	return value.name;
+  		    }
 		  },{
 		    field: '-',
 		    title:'操作',width:200,formatter: function(value,row,index){
@@ -117,14 +160,24 @@
 		var $save_btn = $('#save_btn')
 		//获取表单元素
 		var $name=$('#name')
-		var $tele=$('#tele')
+		var $origin=$('#origin')
+		var $producer=$('#producer')
+		var $unit=$('#unit')
+		var $inprice=$('#inprice')
+		var $outprice=$('#outprice')
+		var $goodstype=$('#goodstype')
 		
 		//添加
 		function add(){
 			//设置保存按钮提交的方法为add
 			method="add";
 			$name.val("");
-			$tele.val("");
+			$origin.val("");
+			$producer.val("");
+			$unit.val("");
+			$inprice.val("");
+			$outprice.val("");
+			$goodstype.val("");
 		}
 		
 		//修改
@@ -134,12 +187,17 @@
 		
 			//加载数据
 			$.ajax({
-				url: 'dep_'+'get?uuid=' + eid,
+				url: 'goods_'+'get?uuid=' + eid,
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){
 					$name.val(rtn.name);
-					$tele.val(rtn.tele)
+					$origin.val(rtn.origin);
+					$producer.val(rtn.producer);
+					$unit.val(rtn.unit);
+					$inprice.val(rtn.inprice);
+					$outprice.val(rtn.outprice);
+					$goodstype.val(rtn.goodstype.name);
 				}
 			})
 		}
@@ -147,9 +205,10 @@
 		//保存
 		$(function() {
 		    $save_btn.click(function () {
+		    	//将表单内容序列化为JSON对象
 		    	var formData = $save_form.serializeJSON();
 		    	$.ajax({
-					url: 'dep_'+method,
+					url: 'goods_'+method,
 					data: formData,
 					dataType: 'json',
 					type: 'post',
@@ -161,9 +220,9 @@
 		})
 		
 		//删除
-		function del(eid){
+		function del(eid){ 
 			$.ajax({
-				url: 'dep_delete?uuid=' + eid,
+				url: 'goods_delete?uuid=' + eid,
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){

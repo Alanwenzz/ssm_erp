@@ -37,5 +37,10 @@ public class GoodsServiceImpl implements GoodsService{
 		// TODO Auto-generated method stub
 		return goodsMapper.get(uuid);
 	}
+
+	public List<Goods> getList() {
+		// TODO Auto-generated method stub
+		return goodsMapper.getList();
+	}
 	
 }

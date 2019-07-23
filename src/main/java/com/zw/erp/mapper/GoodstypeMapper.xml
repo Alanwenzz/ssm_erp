@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.GoodstypeMapper">
+    
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultType="Goodstype" > 
+        select * from goodstype where uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找用户信息 -->
+    <select id="findByCondition" resultType="Goodstype" > 
+        select * from goodstype where 1=1
+        <if test="name!=null">
+        	and name like concat('%',#{name},'%')
+        </if>
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Goodstype"> 
+        insert into goodstype (name) values (#{name});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from goodstype where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="goodstype" >
+	    update goodstype set name=#{name} where uuid=#{uuid}    
+	</update>   
+   
+</mapper>

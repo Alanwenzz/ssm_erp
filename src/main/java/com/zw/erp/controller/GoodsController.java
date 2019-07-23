@@ -27,9 +27,9 @@ public class GoodsController {
 	}
 	
 	//页面
-	@RequestMapping("goodsBS")
+	@RequestMapping("goodsM")
 	public String goodsBS() {
-		return "goodsBS";
+		return "goodsM";
 	}
 	
 	//添加
@@ -83,13 +83,21 @@ public class GoodsController {
 		return goods;
 	}
 	
+//	//查询
+//	@ResponseBody
+//	@RequestMapping("goods_getList")
+//	public List<Goods> getList(Goods goods){
+//		List<Goods> ld=goodsService.findByCondition(goods);
+//		return ld;
+//	}
+	
 	//查询
-	@ResponseBody
-	@RequestMapping("goods_getList")
-	public List<Goods> getList(Goods goods){
-		List<Goods> ld=goodsService.findByCondition(goods);
-		return ld;
-	}
+		@ResponseBody
+		@RequestMapping("goods_getList")
+		public List<Goods> getList(){
+			List<Goods> ld=goodsService.getList();
+			return ld;
+		}
 	
 	//ajax返回
 	public Map<String, Object> ajaxReturn(boolean success,String message){

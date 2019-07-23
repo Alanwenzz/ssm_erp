@@ -22,6 +22,12 @@ public class EmpController {
 	private EmpService empService;
 	
 	//页面
+	@RequestMapping("emp2")
+	public String emp2() {
+		return "emp2";
+	}
+	
+	//页面
 	@RequestMapping("emp")
 	public String emp() {
 		return "emp";
