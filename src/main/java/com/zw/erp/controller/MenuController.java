@@ -29,7 +29,7 @@ public class MenuController {
 	public Menu getMenuTree(){
 		//从0读取整个表
 		Emp emp=(Emp) httpSession.getAttribute("loginUser");
-		Menu menu = empService.readMenusByEmpuuid(emp.getUuid());
+		Menu menu = empService.readMenusByEmpuuid(3l);
 		return menu;
 	}
 	

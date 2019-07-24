@@ -14,7 +14,7 @@
     
 	<!-- 添加用户信息 -->
     <insert id="insert" parameterType="Goodstype"> 
-        insert into goodstype (name) values (#{name});
+        insert into goodstype(name) values(#{name});
     </insert>
    	
    	<!-- 删除用户 -->

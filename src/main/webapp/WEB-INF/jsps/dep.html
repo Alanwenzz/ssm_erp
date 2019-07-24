@@ -41,7 +41,48 @@
 	        </form>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" id="save_btn" class="btn btn-secondary" data-dismiss="modal">保存</button>
+	        <button type="button" id="save_btn" data-toggle="modal" data-target="#modalTable3" class="btn btn-secondary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 删除窗口 -->
+	<div id="modalTable2" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	  <span class="text-danger" style="font:20px">确定要删除吗?</span>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" id="yes_btn" onclick="yes_delete()" data-toggle="modal" data-target="#modalTable3" class="btn btn-info" data-dismiss="modal">确定</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>       
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 回弹窗口 -->
+	<div id="modalTable3" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	  <span id="info" class="text-info" style="font:20px"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" data-dismiss="modal" class="btn btn-info">确定</button>       
 	      </div>
 	    </div>
 	  </div>
@@ -105,7 +146,7 @@
 		    field: '-',
 		    title:'操作',width:200,formatter: function(value,row,index){
 				var oper = "<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#modalTable\" href=\"javascript:void(0)\" onclick=\"edit(" + row.uuid + ")\">修改</button>";
-				oper += "&nbsp;<button type=\"button\" class=\"btn btn-danger\" href=\"javascript:void(0)\" onclick=\"del(" + row.uuid + ")\">删除</button>";
+				oper += "&nbsp;<button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#modalTable2\" href=\"javascript:void(0)\" onclick=\"del(" + row.uuid + ")\">删除</button>";
 				return oper;
 		    }
 		  }]
@@ -155,29 +196,59 @@
 					dataType: 'json',
 					type: 'post',
 					success:function(rtn){
+						if(rtn.success){
+				            $("#info").text("保存成功");	
+						}else{
+							$("#info").text("保存失败");
+						}
 						$table.bootstrapTable('refresh');
 					}
 				})
 		    })
 		})
 		
-		//删除
+		//修改删除方法
 		function del(eid){ 
+			method='dep_delete?uuid=' + eid;			
+		}
+		
+		//删除
+		function yes_delete(){
 			$.ajax({
-				url: 'dep_delete?uuid=' + eid,
+				url: method,
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){
+					if(rtn.success){
+			            $("#info").text("删除成功");	
+					}else{
+						$("#info").text("删除失败");
+					}
 					$table.bootstrapTable('refresh');
 				}
 			});
 		}
 		
+		//打开编辑模态窗
 		$(function() {
 	    	$('#modalTable').on('shown.bs.modal', function () {
 	        	$save_form.bootstrapTable('resetView');
     	})
+	})
+    	
+    	//打开删除模态窗
+		$(function() {
+	    	$('#modalTable2').on('shown.bs.modal', function () {
+	        	$save_form.bootstrapTable('resetView');
+    	})
   })
+		
+		//打开回调信息模态窗
+		$(function() {
+		  	$('#modalTable3').on('shown.bs.modal', function () {
+		      	$save_form.bootstrapTable('resetView');
+		})
+	})
 </script>
 </body>
 </html>

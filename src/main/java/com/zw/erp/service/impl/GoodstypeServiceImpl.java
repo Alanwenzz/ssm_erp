@@ -16,17 +16,17 @@ public class GoodstypeServiceImpl implements GoodstypeService{
 
 	public void add(Goodstype goodstype) {
 		// TODO Auto-generated method stub
-		
+		goodstypeMapper.insert(goodstype);
 	}
 
 	public void delete(long uuid) {
 		// TODO Auto-generated method stub
-		
+		goodstypeMapper.delete(uuid);
 	}
 
 	public void update(Goodstype goodstype) {
 		// TODO Auto-generated method stub
-		
+		goodstypeMapper.update(goodstype);
 	}
 
 	public List<Goodstype> findByCondition(Goodstype goodstype) {
@@ -36,7 +36,7 @@ public class GoodstypeServiceImpl implements GoodstypeService{
 
 	public Goodstype get(long uuid) {
 		// TODO Auto-generated method stub
-		return null;
+		return goodstypeMapper.get(uuid);
 	}
 
 }

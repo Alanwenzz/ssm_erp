@@ -43,8 +43,8 @@
     
 	<!-- 添加用户信息 -->
     <insert id="insert" parameterType="Emp"> 
-        insert into emp (name,gender,tele,address,email,birthday) 
-        values (#{name},#{gender},#{tele},#{address},#{email}#{birthday});
+        insert into emp (name,gender,password,tele,address,email,birthday) 
+        values (#{name},#{gender},#{password},#{tele},#{address},#{email},#{birthday});
     </insert>
    	
    	<!-- 删除用户 -->

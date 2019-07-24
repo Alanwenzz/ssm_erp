@@ -22,6 +22,7 @@ public class EmpServiceImpl implements EmpService{
 
 	public void add(Emp emp) {
 		// TODO Auto-generated method stub
+		emp.setPassword("123456");
 		empMapper.insert(emp);
 	}
 
