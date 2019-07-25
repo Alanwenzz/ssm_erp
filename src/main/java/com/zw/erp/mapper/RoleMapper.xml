@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.RoleMapper">
+    
+    <!-- 根据条件查找用户信息 -->
+    <select id="getList" resultType="Role" > 
+        select * from role 
+    </select>
+       
+    <!-- 根据Id查找当前用户菜单-->
+    <select id="readRoleMenus" resultType="Menu" > 
+        select m.* from role r,role_menu rm,menu m
+		where r.uuid=rm.role_uuid and rm.menus_menuid=m.menuid
+		and r.uuid=#{uuid}
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Role"> 
+        insert into role (name,tele) values (#{name},#{tele});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from role where uuid= #{uuid}   
+	</delete>
+	
+   
+</mapper>

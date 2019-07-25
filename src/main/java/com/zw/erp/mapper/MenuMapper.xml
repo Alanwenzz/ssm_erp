@@ -11,4 +11,13 @@
         select * from menu where pid = #{menuid}
     </select>
     
+    <!-- 删除id对应的所有菜单 -->
+	<delete id="deleteAllUmenu" parameterType="long" >
+	    delete from role_menu where role_uuid= #{rid}   
+	</delete>
+	
+	<!-- 为对应用户添加菜单 -->
+	<insert id="insertUmenu"> 
+        insert into role_menu(role_uuid,menus_menuid) values(#{rid},#{mid});
+    </insert>
 </mapper>

@@ -7,6 +7,11 @@
         select * from emp where email = #{email} and password = #{password}
     </select>
     
+    <!-- 查询所有 -->
+    <select id="getAll" resultType="Emp" > 
+        select * from emp
+    </select>
+    
      <!-- 根据条件查找用户信息 -->
     <select id="findByCondition" resultType="Emp" > 
         select * from emp where 1=1
@@ -68,5 +73,21 @@
         where  e.uuid=er.emp_uuid and er.roles_uuid=rm.role_uuid and rm.menus_menuid=m.menuid 
         and  e.uuid=#{id}
     </select>   
+    
+    <!-- 根据Id查找当前用户的角色 -->
+    <select id="readEmpRoles" resultType="Role" > 
+        select r.* from emp e,emp_role er,role r 
+        where e.uuid=er.emp_uuid and er.roles_uuid=r.uuid and e.uuid= #{uuid}
+    </select>
+    
+    <!-- 删除用户角色 -->
+	<delete id="deleteAllErole" parameterType="long" >
+	    delete from emp_role where emp_uuid= #{uuid}   
+	</delete>
    
+   	<!-- 添加用户角色 -->
+    <insert id="insertErole"> 
+        insert into emp_role(emp_uuid,roles_uuid) 
+        values(#{eid},#{rid});
+    </insert>
 </mapper>

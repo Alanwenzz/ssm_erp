@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户角色设置</title>
+<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
+<script type="text/javascript" src="ui/jquery.min.js"></script>
+<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+</head>
+<body class="easyui-layout"> 
+	<div data-options="region:'west',title:'用户列表'" style="padding:4px;width:300px;">
+		<table id="grid"></table>
+	</div>
+	<div data-options="region:'center',title:'角色设置'" style="padding:4px">
+		<ul id="tree"></ul>
+		<button id="btnSave">保存</button>
+	</div>
+</body>
+<script>
+$(function(){
+	$('#tree').tree({
+		animate:true,
+		checkbox:true
+	});
+
+	$('#grid').datagrid({
+		url: 'emp_getList',
+		columns:[[
+			{field:'uuid',title:'编号',width:100},
+			{field:'name',title:'名称',width:100}
+		]],
+		singleSelect:true,
+		onClickRow:function(rowIndex, rowData){
+			$('#tree').tree({
+				url: 'emp_readEmpRoles?uuid=' + rowData.uuid,
+				animate:true,
+				checkbox:true
+			});
+		}
+	});
+	
+	$('#btnSave').bind('click',function(){
+		var nodes = $('#tree').tree('getChecked');
+		var ids = new Array();
+		$.each(nodes,function(i, node){
+			ids.push(node.id);
+		});
+		alert(ids);
+		//[1,2,3,4] => "1,2,3,4"
+		var checkedStr = ids.join(',');//把数组里的每个元素都拼接上逗号
+		//构建提交数据
+		var formdata = {};
+		//id赋值
+		formdata.uuid= $('#grid').datagrid('getSelected').uuid;
+		//选中的角色ID
+		formdata.checkedStr=checkedStr;
+		$.ajax({
+			url: 'emp_updateEmpRoles',
+			data:formdata,
+			type:'post',
+			dataType: 'json',
+			success:function(rtn){
+				if(rtn==1){
+					$.messager.alert('提示',"保存成功",'info');
+				}else $.messager.alert('提示',"保存失败",'info');
+			}
+		});
+	});
+});
+</script>
+</html>

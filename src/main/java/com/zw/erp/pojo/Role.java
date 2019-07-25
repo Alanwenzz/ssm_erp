@@ -28,7 +28,14 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public boolean equals(Object obj) {  
+        if (obj instanceof Role) {      
+        	Role u = (Role) obj;           
+		    return this.uuid.equals(u.uuid);        
+		}        
+		return super.equals(obj);  
+	}
 }
 
 

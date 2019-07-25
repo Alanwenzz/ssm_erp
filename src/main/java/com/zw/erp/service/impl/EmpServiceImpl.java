@@ -11,6 +11,7 @@ import com.zw.erp.mapper.EmpMapper;
 import com.zw.erp.mapper.MenuMapper;
 import com.zw.erp.pojo.Emp;
 import com.zw.erp.pojo.Menu;
+import com.zw.erp.pojo.Role;
 import com.zw.erp.service.EmpService;
 
 @Service
@@ -130,5 +131,26 @@ public class EmpServiceImpl implements EmpService{
 		return menu;
 	}
 
+	public List<Role> readEmpRoles(long uuid) {
+		// TODO Auto-generated method stub
+		return empMapper.readEmpRoles(uuid);
+	}
+
+	public List<Emp> getAll() {
+		// TODO Auto-generated method stub
+		return empMapper.getAll();
+	}
+
+	public void updateEmpRoles(long uuid, String checkedStr) {
+		// TODO Auto-generated method stub
+		//删除当前用户所有角色
+		empMapper.deleteAllErole(uuid);
+		//把id分割出来
+		String[] ids = checkedStr.split(",");
+		//循环插入
+		for(String id:ids) {
+			empMapper.insertErole(uuid,Integer.parseInt(id));
+		}
+	}
 
 }

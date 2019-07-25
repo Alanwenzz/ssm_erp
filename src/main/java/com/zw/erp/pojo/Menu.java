@@ -56,4 +56,11 @@ public class Menu {
 		this.url = url;
 	}
 
+	public boolean equals(Object obj) {  
+        if (obj instanceof Menu) {      
+        	Menu u = (Menu) obj;           
+		    return this.menuid.equals(u.menuid);        
+		}        
+		return super.equals(obj);  
+	}
 }

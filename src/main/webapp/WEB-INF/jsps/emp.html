@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/all.css" />
 <link href="css/bootstrap-table.min.css" rel="stylesheet">
+<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <style>
 	#add_btn,.buttons-toolbar{margin-top:5px;}
 </style>
@@ -22,7 +22,7 @@
 	</div>
 
 	<!-- 编辑窗口 -->
-	<div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+	<div id="modalTable" class="modal fade" tabindex="-1" role="dialog" >
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -40,6 +40,13 @@
 				<input name="gender" type="radio" id="radio1" value="0">男&nbsp;&nbsp;
 				<input name="gender" type="radio" id="radio2" value="1">女<br/><br/>
 				
+				<!--<input type="text" name="birthday" id="birthday" class="form_datetime" value="" readonly><br/>-->
+	         	<div class="input-append date form_datetime">
+	         		<span style="color:#6c757d">出生日期:</span>
+				    <input name="birthday" id="birthday" class="form-control" size="16" type="text" value="" readonly>
+				    <span class="add-on"><i class="icon-th"></i></span>
+				</div><br/>
+				
 				<p class="text-muted">邮件地址:</p>
 				<input type="text" name="email" id="email" class="form-control" value=""><br/>
 
@@ -47,11 +54,10 @@
 	         	<input type="text" name="tele" id="tele" class="form-control" value=""><br/>
 	         	
 	         	<p class="text-muted">家庭住址:</p>
-	         	<input type="text" name="address" id="address" class="form-control" value=""><br/>
-	         	
-	         	<p class="text-muted">出生日期:</p>
-	         	<input type="text" name="birthday" id="birthday" class="form-control" value=""><br/>
+	         	<input type="text" name="address" id="address" class="form-control" value="">
+	     
 	        </form>
+
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" id="save_btn" class="btn btn-secondary" data-dismiss="modal">保存</button>
@@ -82,6 +88,8 @@
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
  	<script src="js/bootstrap-table.min.js"></script>
+ 	<script src="js/bootstrap-datetimepicker.min.js"></script>
+ 	<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
  	<script src="js/bootstrap-table-zh-CN.min.js"></script>
 
 		
@@ -115,10 +123,10 @@
 			sortable:"true",
 			formatter:function(value, row, index){
 	    		value = row.gender;
- 		    	if(1 == value * 1){
+ 		    	if(0 == value * 1){
  		    		return '男';
  		    	}
- 		    	if(0 == value * 1){
+ 		    	if(1 == value * 1){
  		    		return '女';
  		    	}
  		    },
@@ -161,6 +169,16 @@
 		    }
 		  }]
 		})
+		
+		//绑定日期控件
+		$(".form_datetime").datetimepicker({
+			minView: "month",
+	        format:"yyyy-mm-dd",
+	        language:  'zh-CN',
+	        autoclose: true,
+	        todayBtn: true,
+	        pickerPosition: "bottom-left"
+	    });
 	</script>	
 	<script>
 		var $save_form = $('#save_form')
@@ -173,6 +191,7 @@
 		var $tele=$('#tele')
 		var $address=$('#address')
 		var $birthday=$('#birthday')
+		var $genderText = $("input[name=gender]");
 		
 		//添加
 		function add(){
@@ -180,7 +199,7 @@
 			method="add";
 			$name.val('');
 			$email.val('');
-			$gender.val('');
+			$genderText.attr("checked",false);
 			$tele.val('');
 			$address.val('');
 		    $birthday.val('');
@@ -199,9 +218,12 @@
 				success:function(rtn){
 					$name.val(rtn.name);
 					$email.val(rtn.email);
-					if(rtn.gender==1){
-						$("#radio1").attr("checked","checked");
-					}else $("#radio2").attr("checked","checked");
+					$genderText.attr("checked",false);
+					if(rtn.gender*1==0){
+						$("#radio1").attr("checked",true);		
+					}else{
+						$("#radio2").attr("checked",true);
+					}
 					$tele.val(rtn.tele);
 					$address.val(rtn.address);
 				    $birthday.val(new Date(rtn.birthday).Format("yyyy-MM-dd"));

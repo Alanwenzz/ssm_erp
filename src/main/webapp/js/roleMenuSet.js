@@ -1,0 +1,22 @@
+$(function(){
+	$("#tree").tree({
+		data:[{
+			text:'A',
+			state:'closed',
+			children:[{
+				text:'a'
+			},{
+				text:'b'
+			}]
+		},{text:'B',
+		  state:'open',
+		  children:[{
+			  text:'a'
+		  },{
+			  text:'b'
+		  }]
+		}],
+		animate:true,
+		checkbox:true,
+	})
+})
