@@ -12,27 +12,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zw.erp.pojo.Dep;
-import com.zw.erp.service.DepService;
+import com.zw.erp.pojo.Supplier;
+import com.zw.erp.service.SupplierService;
 
 @Controller
-public class DepController {
+public class SupplierController {
 	@Autowired
-	private DepService depService;
+	private SupplierService supplierService;
 	
 	//页面
-	@RequestMapping("dep")
-	public String dep() {
-		return "dep";
+	@RequestMapping("supplier")
+	public String supplier() {
+		return "supplier";
+	}
+	
+	//页面
+	@RequestMapping("supplierM")
+	public String supplierM() {
+		return "supplierM";
 	}
 	
 	//添加
 	@ResponseBody
-	@RequestMapping("dep_add")
-	public Map<String, Object> add(Dep dep){
+	@RequestMapping("supplier_add")
+	public Map<String, Object> add(Supplier supplier,String type){
 		Map<String, Object> rtn;
 		try {
-			depService.add(dep);
+			supplier.setTele(type);
+			supplierService.add(supplier);
 			rtn=ajaxReturn(true, "添加成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -42,11 +49,11 @@ public class DepController {
 	}
 	//删除
 	@ResponseBody
-	@RequestMapping("dep_delete")
+	@RequestMapping("supplier_delete")
 	public Map<String, Object> delete(long uuid){
 		Map<String, Object> rtn;
 		try {
-			depService.delete(uuid);
+			supplierService.delete(uuid);
 			rtn=ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -56,11 +63,11 @@ public class DepController {
 	}
 	//修改
 	@ResponseBody
-	@RequestMapping("dep_update")
-	public Map<String, Object> update(Dep dep){
+	@RequestMapping("supplier_update")
+	public Map<String, Object> update(Supplier supplier){
 		Map<String, Object> rtn;
 		try {
-			depService.update(dep);
+			supplierService.update(supplier);
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -69,21 +76,29 @@ public class DepController {
 		return rtn;
 	}
 	
-	//根据id查询部门信息
+	//根据type查询
 	@ResponseBody
-	@RequestMapping("dep_get")
-	public Dep get(long uuid){
-		Dep dep=depService.get(uuid);
-		return dep;
+	@RequestMapping("supplier_getList")
+	public List<Supplier> getByType(String type){
+		List<Supplier> supplier=supplierService.getByType(type);
+		return supplier;
 	}
 	
-	//查询
+	//根据type显示页面
 	@ResponseBody
-	@RequestMapping("dep_getList")
-	public List<Dep> getList(Dep dep){
-		List<Dep> ld=depService.findByCondition(dep);
+	@RequestMapping("supplier_get")
+	public Supplier get(long uuid){
+		Supplier ld=supplierService.get(uuid);
 		return ld;
 	}
+		
+//	//查询
+//	@ResponseBody
+//	@RequestMapping("supplier_getList")
+//	public List<Supplier> getList(Supplier supplier){
+//		List<Supplier> ld=supplierService.findByCondition(supplier);
+//		return ld;
+//	}
 	
 	//ajax返回
 	public Map<String, Object> ajaxReturn(boolean success,String message){

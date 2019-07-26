@@ -3,20 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>采购申请</title>
-<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
-<script type="text/javascript" src="ui/jquery.min.js"></script>
-<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
-<script type="text/javascript" src="js/orders_add.js"></script>
-
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/bootstrap-table.min.css" rel="stylesheet"/>
 </head>
 <body>
 <form id="orderForm">
 	供应商：<input id="supplier" name="supplieruuid" >
 <div style="height:2px;"></div>
 </form>
-<table id="grid"></table>
+
+<div id="toolbar">
+  <button id="button" class="btn btn-secondary">添加采购订单</button>
+</div>
+
+<table class="table table-bordered table-hover" id="table"></table>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.serializejson.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+var $table = $('#table')
+var $button = $('#button')
+
+$('#table').bootstrapTable({
+  striped : true, //是否显示行间隔色
+  editable:true,//开启编辑模式
+  toolbar: "#toolbar",
+  columns: [{
+    field: 'uuid',
+    title: '商品编号',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }, {
+    field: 'name',
+    title: '商品名称',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  },{
+    field: 'outprice',
+    title: '价格',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }, {
+    field: 'num',
+    title: '数量',
+    formatter: function (value, row, index) {
+        return "<input id=\"num\" style=\"border:0px;text-align:center\" name=\"num\" type=\"text\" value=\"0\"></input>";
+    },
+    sortable:"true",
+    align: 'center',
+    valign: 'middle',
+  },{
+    field: 'money',
+    title:'金额',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }],
+  onClickRow: function (row, $element) {
+      curRow = row;
+  },
+})
+
+$(function() {
+   $button.click(function () {
+     $table.bootstrapTable('append',{num:0,money:0});
+   })
+ })
+
+</script>	
 </body>
 </html>

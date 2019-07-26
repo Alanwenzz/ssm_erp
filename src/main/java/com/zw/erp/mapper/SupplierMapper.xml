@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.SupplierMapper">
+    
+    <!-- 根据type查 -->
+    <select id="getByType" resultType="Supplier" > 
+        select * from supplier where type = #{type}
+    </select>
+    
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultType="Supplier" > 
+        select * from supplier where uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找用户信息
+    <select id="findByCondition" resultType="Supplier" > 
+        select * from supplier where 1=1
+        <if test="name!=null">
+        	and name like concat('%',#{name},'%')
+        </if>
+        <if test="tele!=null">
+        	and tele like concat('%',#{tele},'%')
+        </if>
+    </select> -->
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Supplier"> 
+        insert into supplier(name,address,contact,email,tele,type) 
+        values(#{name},#{address},#{contact},#{email},#{tele},#{type});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from supplier where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="supplier" >
+	    update supplier set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	</update>   
+   
+</mapper>

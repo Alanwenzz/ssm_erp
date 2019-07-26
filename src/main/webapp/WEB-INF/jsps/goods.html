@@ -8,7 +8,12 @@
 <link rel="stylesheet" href="css/all.css" />
 <link href="css/bootstrap-table.min.css" rel="stylesheet">
 <style>
-	#add_btn,.buttons-toolbar{margin-top:5px;}
+	#add_btn{
+		height:40px;
+		width:64px;
+		margin:7px;
+	}
+	.buttons-toolbar{margin-top:10px;margin-right:7px}
 </style>
 </head>
 <body>
@@ -66,7 +71,6 @@
 		  data-search="true"
 		  data-show-refresh="true"
 		  data-show-toggle="true"
-		  data-show-fullscreen="true"
 		  data-show-columns="true"
 		  data-show-export="true"
 		  data-click-to-select="true"
@@ -94,6 +98,7 @@
 		  pageNumber : 1, //初始化加载第一页
 		  pagination : true,//是否分页
 		  sidePagination : 'client',//server:服务器端分页|client：前端分页
+		  
 		  pageSize : 5,//单页记录数
 		  pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
 		  showRefresh : true,//刷新按钮
