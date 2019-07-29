@@ -83,27 +83,17 @@ public class EmpServiceImpl implements EmpService{
 		Menu _m1=null;
 		Menu _m2=null;
 		for(Menu m1 : root.getMenus()) {
-			_m1=cloneMenu(m1);
+			_m1=cloneMenu(m1);//m1下有无子菜单不知道
 			//二级菜单循环
 			for(Menu m2 :m1.getMenus()) {
 				
-//				if(lMenus.contains(m2)){
-//					//复制菜单
-//					_m2 = cloneMenu(m2);
-//					//加入到上级菜单下
-//					_m1.getMenus().add(_m2);
-//				}
-
-				//用户包含有这个菜单
-				for(Menu lm :lMenus) {
-					if(lm.getPid().equals(m2.getPid())) {				
-						//复制菜单
-						_m2=cloneMenu(m2);
-						//加入到上级菜单下
-						_m1.getMenus().add(_m2);
-						break;
-					}
+				if(lMenus.contains(m2)){
+					//复制菜单
+					_m2 = cloneMenu(m2);
+					//加入到上级菜单下
+					_m1.getMenus().add(_m2);
 				}
+
 			}
 			
 			//有二级菜单加进去

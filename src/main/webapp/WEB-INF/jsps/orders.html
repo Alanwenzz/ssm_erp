@@ -19,8 +19,7 @@
 <table id="grid"></table>
 <!-- 订单详情窗口 -->
 <div id="ordersDlg" style="padding:2px;" class="easyui-dialog" data-options="
-	height:320,width:700,title:'订单详情',modal:true,closed:true
-">
+	height:320,width:700,title:'订单详情',modal:true,closed:true">
 	<table class="hovertable">
 		<tr>
 			<td class="bg">流水号</td>
@@ -73,7 +72,7 @@
 			<tr>
 				<td class="bg">仓库</td>
 				<td><input name="storeuuid" class="easyui-combobox" data-options="
-					url:'store_myList',valueField:'uuid',textField:'name'
+					url:'store_getList',valueField:'uuid',textField:'name'
 				"></td>
 			</tr>
 		</table>
@@ -83,7 +82,7 @@
 <!-- 增加订单的窗口 -->
 <div id="addOrdersDlg" style="padding:2px;">
 	<form id="orderForm">
-		<span id="addOrdersSupplier"></span>：<input id="supplier" name="t.supplieruuid" >
+		<span id="addOrdersSupplier"></span>：<input id="supplier" name="supplieruuid" >
 	<div style="height:2px;"></div>
 	</form>
 	<table id="ordersgrid"></table>

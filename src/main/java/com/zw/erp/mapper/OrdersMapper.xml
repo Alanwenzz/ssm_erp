@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.OrdersMapper">
+    <resultMap type="Orders" id="ordersBean">
+        <id column="uuid" property="uuid" />
+        <result column="checker" property="checker" />
+        <result column="checktime" property="checktime" />
+        <result column="creater" property="creater" />
+        <result column="createtime" property="createtime" />
+        <result column="ender" property="ender" />
+        <result column="endtime" property="endtime" />
+        <result column="starter" property="starter" />
+        <result column="starttime" property="starttime" />
+        <result column="state" property="state" />
+        <result column="supplieruuid" property="supplieruuid" />
+        <result column="totalmoney" property="totalmoney" />
+        <result column="type" property="type" />
+        <result column="waybillsn" property="waybillsn" />
+        <result column="checkerName" property="checkerName" />
+        <result column="createrName" property="createrName" />
+        <result column="enderName" property="enderName" />  
+        <result column="starterName" property="starterName" />   
+        <result column="supplierName" property="supplierName" />       
+ 
+        <!-- 一对多的关系 -->
+        <!-- property: 指的是属性名称, ofType：指的是属性的类型 -->
+        <collection property="orderDetails" ofType="OrderDetail">
+            <id column="uuid1" property="uuid"/>
+            <result column="ender1" property="ender"/>
+            <result column="endtime1" property="endtime"/>
+            <result column="goodsname" property="goodsname"/>
+            <result column="goodsuuid" property="goodsuuid"/>
+            <result column="money" property="money"/>
+            <result column="num" property="num"/>
+            <result column="price" property="price"/>
+            <result column="state1" property="state"/>
+            <result column="storeuuid" property="storeuuid"/>
+            <result column="orders_uuid" property="orders_uuid"/>
+        </collection>
+    </resultMap>
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultMap="ordersBean" > 
+        SELECT * from orders o,orderdetail od WHERE o.uuid=od.orders_uuid and o.uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找用户信息 -->
+    <select id="getList" resultMap="ordersBean" > 
+        SELECT * from orders o,orderdetail od WHERE o.uuid=od.orders_uuid 
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Orders"> 
+        insert into orders (name,tele) values (#{name},#{tele});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from orders where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="orders" >
+	    update orders set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	</update>   
+   
+</mapper>

@@ -54,7 +54,7 @@
 	         	
 	         	<!-- 下拉列表 -->
 	         	<p class="text-muted">商品类型:</p>
-	         	<select  id="goodstype" class="form-control" name="goodstype_uuid" style="background-color:#A2D9D1;font=white">
+	         	<select  id="goodstype" class="form-control" name="goodstype_uuid" style="background-color:#A2D9D1;color:#2A0340">
 	         		<option value="0">--请选择类型--</option>                      
 				</select>
 	        </form>
@@ -164,18 +164,18 @@
 		})
 		
     	$.ajax({  
-               url : "goodstype_getList", //所需要的列表接口地址  
-               type : "post",  
-               dataType : "json",  
-               success : function(result) { 
-               	 var h = "";  
-                    $.each(result, function(index, value) {
-                        h += "<option value='" + value.uuid + "'>" + value.name //下拉框序言的循环数据
-                        + "</option>";
-                    });
-                    $("#goodstype").append(h);//append 添加进去并展示  
-               }
-           })
+            url : "goodstype_getList", //所需要的列表接口地址  
+            type : "post",  
+            dataType : "json",  
+            success : function(result) { 
+            	 var h = "";  
+                 $.each(result, function(index, value) {
+                     h += "<option value='" + value.uuid + "'>" + value.name //下拉框序言的循环数据
+                     + "</option>";
+                 });
+                 $("#goodstype").append(h);//append 添加进去并展示  
+            }
+        })
 
 	</script>	
 	<script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>采购申请</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/bootstrap-table.min.css" rel="stylesheet"/>
+</head>
+<body>
+<form id="orderForm">
+	供应商：<input id="supplier" name="supplieruuid" >
+<div style="height:2px;"></div>
+</form>
+
+<div id="toolbar">
+  <button id="button" class="btn btn-secondary">添加采购订单</button>
+</div>
+
+<table class="table table-bordered table-hover" id="table"></table>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.serializejson.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-zh-CN.min.js"></script>
+
+<script type="text/javascript">
+var $table = $('#table')
+var $button = $('#button')
+
+$('#table').bootstrapTable({
+  striped : true, //是否显示行间隔色
+  editable:true,//开启编辑模式
+  toolbar: "#toolbar",
+  columns: [{
+    field: 'uuid',
+    title: '商品编号',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }, {
+    field: 'name',
+    title: '商品名称',
+    formatter: function (value, row, index) {
+        return "<select  id=\"goodsname\" class=\"form-control\" name=\"name\" style=\"background-color:#A2D9D1;color:#2A0340\"><option value=\"0\">--请选择类型--</option></select>";
+    },
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  },{
+    field: 'outprice',
+    title: '价格',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }, {
+    field: 'num',
+    title: '数量',
+    formatter: function (value, row, index) {
+        return "<input id=\"num\" style=\"border:0px;text-align:center\" name=\"num\" type=\"text\" value=\"0\"></input>";
+    },
+    sortable:"true",
+    align: 'center',
+    valign: 'middle',
+  },{
+    field: 'money',
+    title:'金额',
+    sortable:"true",
+    align: 'center',
+    valign: 'middle'
+  }],
+  onClickRow: function (row, $element) {
+      curRow = row;
+  },
+})
+
+$(function() {
+   $button.click(function () {
+     $table.bootstrapTable('append',{num:0,money:0});
+     $.ajax({  
+   	    url : "goods_getList", //所需要的列表接口地址  
+   	    type : "post",  
+   	    dataType : "json",  
+   	    success : function(result) { 
+   	    	 var h = "";  
+   	         $.each(result, function(index, value) {
+   	             h += "<option value='" + value.uuid + "'>" + value.name //下拉框序言的循环数据
+   	             + "</option>";
+   	         });
+   	         $("#goodsname").append(h);//append 添加进去并展示  
+   	    }
+    })
+    
+    $("#goodsname").change(function(){
+        var opt=$("#goodsname").val();
+        
+        alert(opt)
+    });
+
+    
+  })
+})
+
+
+</script>	
+</body>
+</html>

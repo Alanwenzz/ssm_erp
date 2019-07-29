@@ -6,14 +6,14 @@ $(function(){
 	var inoutTitle = "";
 	if(Request['oper']=='myorders'){
 		if(Request['type']*1 == 1){
-			url = "orders_myListByPage?t1.type=1";
+			url = "orders_getList?type=1";
 			document.title="我的采购订单";
 			btnText = "采购申请";
 			//显示供应商
 			$('#addOrdersSupplier').html('供应商');
 		}
 		if(Request['type']*1 == 2){
-			url = "orders_myListByPage?t1.type=2&t1.state=0";
+			url = "orders_getList?type=2&state=0";
 			document.title="我的销售订单";
 			btnText = "销售订单录入";
 			//显示客户
@@ -22,27 +22,27 @@ $(function(){
 	}
 	//采购订单查询
 	if(Request['oper'] == 'orders'){
-		url +="?t1.type=1";
+		url +="?type=1";
 		document.title="采购订单查询";
 	}
 	//如果审核业务，加上state=0，只查询出未审核的订单
 	if(Request['oper'] == 'doCheck'){
-		url += "?t1.type=1&t1.state=0";
+		url += "?type=1&state=0";
 		document.title="采购订单审核";
 	}
 	//如果确认业务，加上state=1，只查询出已审核过的订单
 	if(Request['oper'] == 'doStart'){
-		url += "?t1.type=1&t1.state=1";
+		url += "?type=1&state=1";
 		document.title="采购订单确认";
 	}
 	//如果入库业务，加上state=2，只查询出已确认过的订单
 	if(Request['oper'] == 'doInStore'){
-		url += "?t1.type=1&t1.state=2";
+		url += "?type=1&state=2";
 		document.title="采购订单入库";
 		inoutTitle = "入库";
 	}
 	if(Request['oper'] == 'doOutStore'){
-		url += "?t1.type=2&t1.state=0";
+		url += "?type=2&state=0";
 		document.title="销售订单出库";
 		inoutTitle = "出库";
 	}

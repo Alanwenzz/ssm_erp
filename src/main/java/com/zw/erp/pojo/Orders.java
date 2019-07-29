@@ -3,6 +3,8 @@ package com.zw.erp.pojo;
 
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 /**
  * 订单实体类
@@ -29,9 +31,13 @@ public class Orders {
 	public static final String TYPE_OUT = "2";
 
 	private Long uuid;//编号
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date createtime;//生成日期
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date checktime;//审核日期
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date starttime;//确认日期
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date endtime;//入库或出库日期
 	private String type;//1:采购 2:销售
 	private Long creater;//下单员
