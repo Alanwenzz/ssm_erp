@@ -6,7 +6,7 @@ import com.zw.erp.pojo.Orders;
 
 public interface OrdersService {
 
-	List<Orders> getList(String type);
+	List<Orders> getList(String type,int page,int rows);
 
 	void add(Orders orders);
 

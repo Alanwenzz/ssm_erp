@@ -1,6 +1,7 @@
 package com.zw.erp.pojo;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,8 +12,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Administrator *
  */
 
-public class Orders {	
+public class Orders implements Serializable{	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** 未审核 */
 	public static final String STATE_CREATE = "0";
 	/** 已审核 */

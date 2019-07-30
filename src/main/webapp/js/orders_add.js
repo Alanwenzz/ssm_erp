@@ -3,17 +3,17 @@ var existEditIndex = -1;
 $(function(){
 	$('#ordersgrid').datagrid({
 		columns:[[
-		          {field:'uuid',title:'商品编号',width:100,editor:{type:'numberbox',options:{
+		          {field:'goodsuuid',title:'商品编号',width:100,editor:{type:'numberbox',options:{
 		        	  //禁止编辑
 		        	  disabled:true
 		          }}},
-		          {field:'name',title:'商品名称',width:100,editor:{type:'combobox',options:{
+		          {field:'goodsname',title:'商品名称',width:100,editor:{type:'combobox',options:{
 		        	  url:'goods_getList',
 		        	  valueField:'name',
 		        	  textField:'name',
 		        	  onSelect: function(goods){
 		        		  //获取商品编辑编辑器
-		        		  var uuidEditor = getEditor('uuid');
+		        		  var uuidEditor = getEditor('goodsuuid');
 		        		  //target，指向真正使用element
 		        		  $(uuidEditor.target).val(goods.uuid);
 		        		  

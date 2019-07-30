@@ -34,6 +34,7 @@
 	      </div>
 	      <div class="modal-body">
 	        <form id="save_form">
+	        	<input type="hidden" name="uuid" id="uuid" value="">
 	          	<p class="text-muted">姓名:</p>
 	          	<input type="text" name="name" id="name" class="form-control" value=""><br/>
 	          	<p class="text-muted">联系地址:</p>
@@ -215,14 +216,15 @@
 		//修改
 		function edit(eid){
 			//设置保存按钮提交的方法为update
-			method="supplier_update?uuid="+eid+listType;
+			method="supplier_update"+listType;
 		
 			//加载数据
 			$.ajax({
-				url: 'supplier_get?uuid=' + eid,
+				url: 'supplier_get?uuid='+ eid,
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){
+					$("#uuid").val(rtn.uuid);
 					$name.val(rtn.name);
 					$address.val(rtn.address);
 					$contact.val(rtn.contact);

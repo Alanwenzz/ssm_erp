@@ -26,24 +26,18 @@ public class SupplierController {
 		return "supplier";
 	}
 	
-	//页面
-	@RequestMapping("supplierM")
-	public String supplierM() {
-		return "supplierM";
-	}
-	
 	//添加
 	@ResponseBody
 	@RequestMapping("supplier_add")
 	public Map<String, Object> add(Supplier supplier,String type){
 		Map<String, Object> rtn;
 		try {
-			supplier.setTele(type);
+			supplier.setType(type);
 			supplierService.add(supplier);
 			rtn=ajaxReturn(true, "添加成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "添加失败");
+			rtn=ajaxReturn(false, "添加失败");
 		}
 		return rtn;
 	}
@@ -57,21 +51,23 @@ public class SupplierController {
 			rtn=ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "删除失败");
+			rtn=ajaxReturn(false, "删除失败");
 		}
 		return rtn;
 	}
 	//修改
 	@ResponseBody
 	@RequestMapping("supplier_update")
-	public Map<String, Object> update(Supplier supplier){
+	public Map<String, Object> update(Supplier supplier,String type,long uuid){
 		Map<String, Object> rtn;
 		try {
+			supplier.setUuid(uuid);
+			supplier.setType(type);
 			supplierService.update(supplier);
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "更新失败");
+			rtn=ajaxReturn(false, "更新失败");
 		}
 		return rtn;
 	}

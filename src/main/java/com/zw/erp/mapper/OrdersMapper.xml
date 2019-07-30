@@ -46,11 +46,15 @@
     <!-- 根据条件查找用户信息 -->
     <select id="getList" resultMap="ordersBean" > 
         SELECT * from orders o,orderdetail od WHERE o.uuid=od.orders_uuid 
+        <if test="page!=null and rows!=null">
+			limit #{page},#{rows}
+		</if>
     </select>
     
 	<!-- 添加用户信息 -->
-    <insert id="insert" parameterType="Orders"> 
-        insert into orders (name,tele) values (#{name},#{tele});
+    <insert id="insert" useGeneratedKeys="true" parameterType="Orders" keyProperty="o.uuid" keyColumn="uuid"> 
+        insert into orders(checker,checktime,creater,createtime,ender,endtime,starter,starttime,state,supplieruuid,totalmoney,type,waybillsn,checkerName,createrName,enderName,starterName,supplierName) 
+        values(#{o.checker},#{o.checktime},#{o.creater},#{o.createtime},#{o.ender},#{o.endtime},#{o.starter},#{o.starttime},#{o.state},#{o.supplieruuid},#{o.totalmoney},#{o.type},#{o.waybillsn},#{o.checkerName},#{o.createrName},#{o.enderName},#{o.starterName},#{o.supplierName});
     </insert>
    	
    	<!-- 删除用户 -->

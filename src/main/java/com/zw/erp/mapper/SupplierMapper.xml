@@ -36,7 +36,8 @@
 	
 	<!-- 更新用户信息 -->
 	<update id="update" parameterType="supplier" >
-	    update supplier set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	    update supplier set address=#{address},contact=#{contact},email=#{email},name=#{name},tele=#{tele},type=#{type} 
+	    where uuid=#{uuid}    
 	</update>   
    
 </mapper>

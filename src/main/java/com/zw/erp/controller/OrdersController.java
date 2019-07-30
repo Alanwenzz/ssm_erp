@@ -15,6 +15,7 @@ import com.zw.erp.pojo.Emp;
 import com.zw.erp.pojo.Orderdetail;
 import com.zw.erp.pojo.Orders;
 import com.zw.erp.service.OrdersService;
+import com.zw.erp.service.SupplierService;
 
 
 
@@ -22,6 +23,8 @@ import com.zw.erp.service.OrdersService;
 public class OrdersController {
 	@Autowired
 	private OrdersService ordersService;
+	@Autowired
+	private SupplierService supplierService;
 	@Autowired
 	private HttpSession httpSession;
 	
@@ -43,8 +46,16 @@ public class OrdersController {
 		}
 		try {
 			Orders orders=new Orders();
-			//订单创建者
+			//订单创建者编号
 			orders.setCreater(loginUser.getUuid());
+			//订单创建者名字
+			orders.setCreaterName(loginUser.getName());
+			//设置供应商编号
+			orders.setSupplieruuid(supplieruuid);
+			//设置类型
+			orders.setType(type);
+			//设置供应商名称
+			orders.setSupplierName(supplierService.get(supplieruuid).getName());
 			//JSON.parseArray  把json字符串转数组
 			List<Orderdetail> detailList = JSON.parseArray(json,Orderdetail.class);
 			//订单明细
@@ -61,8 +72,10 @@ public class OrdersController {
 	
 	@RequestMapping("orders_getList")
 	@ResponseBody
-	public List<Orders> getList(String type) {
-		return ordersService.getList(type);
+	public List<Orders> getList(String type,int page,int rows) {
+		//第一条数据
+		int firstResult = (page -1) * rows;
+		return ordersService.getList(type,firstResult, rows);
 	}
 	
 	//ajax返回
