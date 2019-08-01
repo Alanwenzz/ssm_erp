@@ -42,7 +42,7 @@ public class GoodsController {
 			rtn=ajaxReturn(true, "添加成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "添加失败");
+			rtn=ajaxReturn(false, "添加失败");
 		}
 		return rtn;
 	}
@@ -56,7 +56,7 @@ public class GoodsController {
 			rtn=ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "删除失败");
+			rtn=ajaxReturn(false, "删除失败");
 		}
 		return rtn;
 	}

@@ -9,4 +9,5 @@ public interface OrderdetailMapper {
 	public void delete(long uuid);
 	public void update(Orderdetail orderdetail);
 	public Orderdetail get(long uuid);
+	public int getCount(Orderdetail orderdetail); 
 }

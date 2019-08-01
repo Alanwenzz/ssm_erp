@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.StoredetailMapper">
+    
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultType="Storedetail" > 
+        select * from storedetail where uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找用户信息 -->
+    <select id="findByCondition" resultType="Storedetail" > 
+        select * from storedetail where 1=1
+        <if test="goodsuuid!=null">
+        	and goodsuuid = #{goodsuuid}
+        </if>
+        <if test="storeuuid!=null">
+        	and storeuuid = #{storeuuid}
+        </if>
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Storedetail"> 
+        insert into storedetail(goodsuuid,num,storeuuid,goodsName,storeName) 
+        values(#{goodsuuid},#{num},#{storeuuid},#{goodsName},#{storeName});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from storedetail where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="storedetail" >
+	    update storedetail set num=#{num}
+	    where uuid=#{uuid}    
+	</update>   
+   
+</mapper>

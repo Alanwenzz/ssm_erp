@@ -3,9 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- sweetalert2 -->
+<link rel="stylesheet" href="css/sweetalert2.min.css" />
+
 <link href="css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/all.css" />
 <link href="css/bootstrap-table.min.css" rel="stylesheet">
 <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
 <style>
 	#add_btn,.buttons-toolbar{margin-top:5px;}
 </style>
@@ -83,14 +88,25 @@
 	
 	
 	<script src="js/jquery.min.js"></script>
+	<!-- sweetalert2 -->
+	<script type="text/javascript" src="js/sweetalert2.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/es6-promise/latest/es6-promise.min.js"></script>
+	<!-- 日期格式化 -->
 	<script type="text/javascript" src="ui/date.js"></script>
+	<!-- 表单转json -->
 	<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
+	
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	
+	<!-- bootstrap-table -->
  	<script src="js/bootstrap-table.min.js"></script>
+ 	<script src="js/bootstrap-table-zh-CN.min.js"></script>
+ 	
+ 	<!-- 日期控件 -->
  	<script src="js/bootstrap-datetimepicker.min.js"></script>
  	<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
- 	<script src="js/bootstrap-table-zh-CN.min.js"></script>
+ 	
 
 		
 	<script>
@@ -241,6 +257,21 @@
 					dataType: 'json',
 					type: 'post',
 					success:function(rtn){
+						if(rtn.success){
+							swal({
+								text: "保存成功！",
+								type: "success",
+								confirmButtonText: '确认',
+								confirmButtonColor: '#4cd964',
+							})	
+						}else{
+							swal({
+								text: "保存失败！",
+								type: "error",
+								confirmButtonText: '确认',
+								confirmButtonColor: '#f27474',
+							})
+						}		
 						$table.bootstrapTable('refresh');
 					}
 				})
@@ -254,6 +285,21 @@
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){
+					if(rtn.success){
+						swal({
+							text: "删除成功！",
+							type: "success",
+							confirmButtonText: '确认',
+							confirmButtonColor: '#4cd964',
+						})	
+					}else{
+						swal({
+							text: "删除失败！",
+							type: "error",
+							confirmButtonText: '确认',
+							confirmButtonColor: '#f27474',
+						})
+					}		
 					$table.bootstrapTable('refresh');
 				}
 			});

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.StoreoperMapper">
+    
+    <!-- 根据Id查找当前用户信息 -->
+    <select id="get" resultType="Storeoper" > 
+        select * from storeoper where uuid = #{uuid}
+    </select>
+    
+    <!-- 根据条件查找用户信息 -->
+    <select id="findByCondition" resultType="Storeoper" > 
+        select * from storeoper where 1=1
+    </select>
+    
+	<!-- 添加用户信息 -->
+    <insert id="insert" parameterType="Storeoper"> 
+        insert into storeoper(empuuid,goodsuuid,num,opertime,storeuuid,type,empName,goodsName,storeName) 
+        values(#{empuuid},#{goodsuuid},#{num},#{opertime},#{storeuuid},#{type},#{empName},#{goodsName},#{storeName});
+    </insert>
+   	
+   	<!-- 删除用户 -->
+	<delete id="delete" parameterType="long" >
+	    delete from storeoper where uuid= #{uuid}   
+	</delete>
+	
+	<!-- 更新用户信息 -->
+	<update id="update" parameterType="storeoper" >
+	    update storeoper set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	</update>   
+   
+</mapper>

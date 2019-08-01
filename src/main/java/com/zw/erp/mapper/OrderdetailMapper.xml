@@ -7,6 +7,11 @@
         select * from orderdetail where uuid = #{uuid}
     </select>
     
+    <!-- 获取数量 -->
+    <select id="getCount" resultType="int" > 
+        select count(*) from orderdetail where orders_uuid = #{orders_uuid} and state=#{state}
+    </select>
+    
     <!-- 根据条件查找用户信息 -->
     <select id="findByCondition" resultType="Orderdetail" > 
         select * from orderdetail where 1=1
@@ -25,7 +30,7 @@
 	
 	<!-- 更新用户信息 -->
 	<update id="update" parameterType="orderdetail" >
-	    update orderdetail set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	    update orderdetail set state=#{state},ender=#{ender},endtime=#{endtime},storeuuid=#{storeuuid} where uuid=#{uuid}    
 	</update>   
    
 </mapper>

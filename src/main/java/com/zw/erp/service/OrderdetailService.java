@@ -8,4 +8,6 @@ public interface OrderdetailService {
 	public void update(Orderdetail orderdetail);
 	public List<Orderdetail> findByCondition(Orderdetail orderdetail);
 	public Orderdetail get(long uuid);
+	public void doInStore(Long odid, Long storeuuid, long eid,String ename);
+	public void doOutStore(Long odid, Long storeuuid, long eid, String ename);
 }

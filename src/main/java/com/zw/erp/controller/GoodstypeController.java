@@ -32,7 +32,7 @@ public class GoodstypeController {
 			rtn=ajaxReturn(true, "Ìí¼Ó³É¹¦");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "Ìí¼ÓÊ§°Ü");
+			rtn=ajaxReturn(false, "Ìí¼ÓÊ§°Ü");
 		}
 		return rtn;
 	}
@@ -46,7 +46,7 @@ public class GoodstypeController {
 			rtn=ajaxReturn(true, "É¾³ý³É¹¦");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "É¾³ýÊ§°Ü");
+			rtn=ajaxReturn(false, "É¾³ýÊ§°Ü");
 		}
 		return rtn;
 	}

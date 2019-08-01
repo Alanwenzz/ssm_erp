@@ -33,10 +33,10 @@ public class OrdersController {
 		return "orders";
 	}
 	
+	//订单添加
 	@RequestMapping("orders_add")
 	@ResponseBody
 	public Map<String, Object> orders_add(String type,long supplieruuid,String json) {
-		System.out.println(json);
 		Map<String, Object> rtn;
 		Emp loginUser = (Emp)httpSession.getAttribute("loginUser");
 		if(null == loginUser){
@@ -72,10 +72,64 @@ public class OrdersController {
 	
 	@RequestMapping("orders_getList")
 	@ResponseBody
-	public List<Orders> getList(String type,int page,int rows) {
+	public Map<String, Object> getList(String state,String type,int page,int rows) {
 		//第一条数据
 		int firstResult = (page -1) * rows;
-		return ordersService.getList(type,firstResult, rows);
+		//总条数
+		long total = ordersService.getCount();
+		//查询的数据
+		List<Orders> list=ordersService.getList(state,type,firstResult, rows);
+		//{total: total, rows:[]}
+		Map<String, Object> mapData = new HashMap<String, Object>();
+		mapData.put("total", total);
+		mapData.put("rows", list);
+		return mapData;
+	}
+	
+	//订单审核
+	@RequestMapping("orders_doCheck")
+	@ResponseBody
+	public Map<String,Object> doCheck(long uuid){
+		Map<String,Object> rtn;
+		//获取当前登陆用户
+		Emp loginUser = (Emp) httpSession.getAttribute("loginUser");
+		if(null == loginUser){
+			//用户没有登陆，session已失效
+			rtn=ajaxReturn(false, "亲！您还没有登陆");
+			return rtn;
+		}
+		try {
+			//调用审核业务
+			ordersService.doCheck(uuid, loginUser.getUuid(),loginUser.getName());
+			rtn=ajaxReturn(true, "审核成功");
+		} catch (Exception e) {
+			rtn=ajaxReturn(false, "审核失败");
+			e.printStackTrace();
+		}
+		return rtn;
+	}
+	
+	//订单确认
+	@RequestMapping("orders_doStart")
+	@ResponseBody
+	public Map<String,Object> doStart(long uuid){
+		Map<String,Object> rtn;
+		//获取当前登陆用户
+		Emp loginUser = (Emp) httpSession.getAttribute("loginUser");
+		if(null == loginUser){
+			//用户没有登陆，session已失效
+			rtn=ajaxReturn(false, "亲！您还没有登陆");
+			return rtn;
+		}
+		try {
+			//调用审核业务
+			ordersService.doStart(uuid, loginUser.getUuid(),loginUser.getName());
+			rtn=ajaxReturn(true, "确认成功");
+		} catch (Exception e) {
+			rtn=ajaxReturn(false, "确认失败");
+			e.printStackTrace();
+		}
+		return rtn;
 	}
 	
 	//ajax返回

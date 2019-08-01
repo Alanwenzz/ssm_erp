@@ -6,7 +6,7 @@ $(function(){
 	var inoutTitle = "";
 	if(Request['oper']=='myorders'){
 		if(Request['type']*1 == 1){
-			url = "orders_getList?type=1";
+			url = "orders_getList?type=1&state=0";
 			document.title="我的采购订单";
 			btnText = "采购申请";
 			//显示供应商
@@ -19,6 +19,11 @@ $(function(){
 			//显示客户
 			$('#addOrdersSupplier').html('客户');
 		}
+	}
+	//销售订单查询
+	if(Request['oper'] == 'out'){
+		url ="orders_getList?type=2";
+		document.title="销售订单查询";
 	}
 	//采购订单查询
 	if(Request['oper'] == 'orders'){
@@ -101,7 +106,7 @@ $(function(){
 		});
 	}
 	
-	//添加审核按钮
+	//添加确认按钮
 	if(Request['oper'] == 'doStart'){
 		$('#ordersDlg').dialog({
 			toolbar:[{
@@ -230,7 +235,7 @@ function doCheck(){
 	$.messager.confirm('确认', '确认要审核吗？', function(yes){
 		if(yes){
 		    $.ajax({
-		    	url: 'orders_doCheck?id=' + $('#uuid').html(),
+		    	url: 'orders_doCheck?uuid=' + $('#uuid').html(),
 		    	dataType: 'json',
 		    	type: 'post',
 		    	success:function(rtn){
@@ -255,7 +260,7 @@ function doStart(){
 	$.messager.confirm('确认', '确定要确认吗？', function(yes){
 		if(yes){
 		    $.ajax({
-		    	url: 'orders_doStart?id=' + $('#uuid').html(),
+		    	url: 'orders_doStart?uuid=' + $('#uuid').html(),
 		    	dataType: 'json',
 		    	type: 'post',
 		    	success:function(rtn){
@@ -281,11 +286,11 @@ function doInOutStore(){
 	var url = "";
 	if(Request['type'] * 1 == 1){
 		message = "确认要入库吗？";
-		url = "orderdetail_doInStore";
+		url="orderdetail_doInStore";
 	}
 	if(Request['type'] * 1 == 2){
 		message = "确认要出库吗？";
-		url = "orderdetail_doOutStore";
+		url="orderdetail_doOutStore";
 	}
 	var formdata = $('#itemForm').serializeJSON();
 	if(formdata.storeuuid == ''){
@@ -295,8 +300,8 @@ function doInOutStore(){
 	$.messager.confirm("确认",message,function(yes){
 		if(yes){
 			$.ajax({
-				url: url,
-				data: formdata,
+				url:url,
+				data:formdata,
 				dataType: 'json',
 				type: 'post',
 				success:function(rtn){

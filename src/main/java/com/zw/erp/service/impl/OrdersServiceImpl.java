@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.zw.erp.mapper.OrderdetailMapper;
 import com.zw.erp.mapper.OrdersMapper;
+import com.zw.erp.pojo.Orderdetail;
 import com.zw.erp.pojo.Orders;
 import com.zw.erp.service.OrdersService;
-import com.zw.erp.pojo.Orderdetail;
 
 @Service
 public class OrdersServiceImpl implements OrdersService{
@@ -19,9 +19,9 @@ public class OrdersServiceImpl implements OrdersService{
 	@Autowired
 	public OrderdetailMapper orderdetailMapper;
 
-	public List<Orders> getList(String type,int page,int rows) {
+	public List<Orders> getList(String state,String type,int page,int rows) {
 		// TODO Auto-generated method stub
-		return ordersMapper.getList(type,page,rows);
+		return ordersMapper.getList(state,type,page,rows);
 	}
 
 	public void add(Orders orders) {
@@ -56,5 +56,60 @@ public class OrdersServiceImpl implements OrdersService{
 			System.out.println(1);
 		}
 	}
-	
+
+	public long getCount() {
+		// TODO Auto-generated method stub
+		return ordersMapper.getCount();
+	}
+
+	public void doCheck(long oid, long uid,String name) {
+		// TODO Auto-generated method stub
+		Orders orders=ordersMapper.get(oid);
+		
+		//订单的状态
+		if(!Orders.STATE_CREATE.equals(orders.getState())){
+			try {
+				throw new Exception("亲！该订单已经审核过了");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//1. 修改订单的状态
+		orders.setState(Orders.STATE_CHECK);
+		//2. 审核的时间
+		orders.setChecktime(new Date());
+		//3. 审核人
+		orders.setChecker(uid);
+		orders.setCheckerName(name);
+		
+		ordersMapper.update(orders);
+	}
+
+	public void doStart(long oid, long uid, String name) {
+		// TODO Auto-generated method stub
+		Orders orders=ordersMapper.get(oid);
+		
+		//订单的状态
+		if(!Orders.STATE_CHECK.equals(orders.getState())){
+			try {
+				throw new Exception("亲！该订单已经确认过了");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		//1. 修改订单的状态
+		orders.setState(Orders.STATE_START);
+		//2. 审核的时间
+		orders.setStarttime(new Date());
+		//3. 审核人
+		orders.setStarter(uid);
+		orders.setStarterName(name);
+		
+		ordersMapper.update(orders);
+	}
+
 }

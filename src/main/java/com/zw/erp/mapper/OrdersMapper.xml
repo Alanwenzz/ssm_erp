@@ -24,31 +24,39 @@
  
         <!-- 一对多的关系 -->
         <!-- property: 指的是属性名称, ofType：指的是属性的类型 -->
-        <collection property="orderDetails" ofType="OrderDetail">
-            <id column="uuid1" property="uuid"/>
-            <result column="ender1" property="ender"/>
-            <result column="endtime1" property="endtime"/>
+        <collection property="orderDetails" ofType="Orderdetail">
+            <id column="oduuid" property="uuid"/>
+            <result column="odender" property="ender"/>
+            <result column="odendtime" property="endtime"/>
             <result column="goodsname" property="goodsname"/>
             <result column="goodsuuid" property="goodsuuid"/>
             <result column="money" property="money"/>
             <result column="num" property="num"/>
             <result column="price" property="price"/>
-            <result column="state1" property="state"/>
+            <result column="odstate" property="state"/>
             <result column="storeuuid" property="storeuuid"/>
             <result column="orders_uuid" property="orders_uuid"/>
         </collection>
     </resultMap>
     <!-- 根据Id查找当前用户信息 -->
     <select id="get" resultMap="ordersBean" > 
-        SELECT * from orders o,orderdetail od WHERE o.uuid=od.orders_uuid and o.uuid = #{uuid}
+        SELECT o.*,od.*,od.uuid 'uuid' from orders o,orderdetail od WHERE o.uuid=od.orders_uuid and o.uuid = #{uuid}
     </select>
     
     <!-- 根据条件查找用户信息 -->
     <select id="getList" resultMap="ordersBean" > 
-        SELECT * from orders o,orderdetail od WHERE o.uuid=od.orders_uuid 
+        SELECT o.*,od.*,od.uuid 'oduuid',od.ender 'odender',od.endtime 'odendtime',od.state 'odstate' from orders o,orderdetail od WHERE o.uuid=od.orders_uuid and o.type=#{type}
+        <if test="state!=null">
+			and o.state=#{state}
+		</if>
         <if test="page!=null and rows!=null">
 			limit #{page},#{rows}
 		</if>
+    </select>
+    
+    <!-- 获取所有数据数量 -->
+    <select id="getCount" resultType="long"> 
+        SELECT count(*) from orders
     </select>
     
 	<!-- 添加用户信息 -->
@@ -64,7 +72,8 @@
 	
 	<!-- 更新用户信息 -->
 	<update id="update" parameterType="orders" >
-	    update orders set name=#{name},tele=#{tele} where uuid=#{uuid}    
+	    update orders set state=#{state},checktime=#{checktime},checker=#{checker},checkerName=#{checkerName},starttime=#{starttime},starter=#{starter},starterName=#{starterName},endtime=#{endtime},ender=#{ender},enderName=#{enderName}
+	    where uuid=#{uuid}    
 	</update>   
    
 </mapper>

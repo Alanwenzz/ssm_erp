@@ -36,7 +36,7 @@ public class StoreController {
 			rtn=ajaxReturn(true, "添加成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "添加失败");
+			rtn=ajaxReturn(false, "添加失败");
 		}
 		return rtn;
 	}
@@ -50,7 +50,7 @@ public class StoreController {
 			rtn=ajaxReturn(true, "删除成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "删除失败");
+			rtn=ajaxReturn(false, "删除失败");
 		}
 		return rtn;
 	}
@@ -64,7 +64,7 @@ public class StoreController {
 			rtn=ajaxReturn(true, "更新成功");
 		} catch (Exception e) {
 			// TODO: handle exception
-			rtn=ajaxReturn(true, "更新失败");
+			rtn=ajaxReturn(false, "更新失败");
 		}
 		return rtn;
 	}
