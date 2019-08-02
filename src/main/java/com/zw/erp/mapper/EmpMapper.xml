@@ -7,6 +7,19 @@
         select * from emp where email = #{email} and password = #{password}
     </select>
     
+    <!-- 获取所有数据数量 -->
+    <select id="getCount" resultType="long"> 
+        SELECT count(*) from emp
+    </select>
+    
+    <!-- 分页查询所有 -->
+    <select id="getListByPage" resultType="Emp" > 
+        select * from emp
+        <if test="page!=null and rows!=null">
+			limit #{page},#{rows}
+		</if>
+    </select>
+    
     <!-- 查询所有 -->
     <select id="getAll" resultType="Emp" > 
         select * from emp

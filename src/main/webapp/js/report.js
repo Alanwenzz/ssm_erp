@@ -8,7 +8,7 @@ $(function(){
 		]],
 		singleSelect: true,
 		onLoadSuccess:function(data){
-			//alert(JSON.stringify(data));
+			alert(JSON.stringify(data));
 			//显示图
 			showChart(data.rows);
 		}
@@ -29,6 +29,7 @@ $(function(){
 
 //显示图
 function showChart(_data){
+	alert(_data);
 	$('#pieChart').highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -59,7 +60,7 @@ function showChart(_data){
         series: [{
             name: "比例",
             colorByPoint: true,
-            data: _data
+            data: _data   
         }]
     });
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.erp.mapper.ReportMapper">
+    
+    <!-- 报表 -->
+    <select id="orderReport" resultType="java.util.HashMap" > 
+        select gt.name as name,sum(ol.money) as y from goodstype gt, goods gs, orderdetail ol, orders o 
+        where gs.goodstype_uuid=gt.uuid and ol.orders_uuid = o.uuid and ol.goodsuuid=gs.uuid 
+        and o.type='2'  
+        <if test="stateDate!=null">
+        	and o.createtime &gt; #{stateDate} 
+        </if>
+        <if test="endDate!=null">
+        	and o.createtime &lt; #{endDate} 
+        </if>
+        group by gt.name
+    </select>
+    
+    <!-- 统计每月的销售额 -->
+    <select id="getSumMoney" resultType="java.util.HashMap" > 
+        select month(o.createtime) as name,sum(ol.money) as y from Orderdetail ol, Orders o 
+        where ol.orders_uuid=o.uuid and o.type='2' 
+        <if test="cyear!=null">
+        	and year(o.createtime)=#{cyear}
+        </if>
+        group by month(o.createtime);
+    </select>
+    
+</mapper>

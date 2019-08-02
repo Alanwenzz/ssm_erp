@@ -93,6 +93,24 @@ public class EmpController {
 		List<Emp> lEmps=empService.findByCondition(emp, birthday2);
 		return lEmps;
 	}
+	
+	//分页查询
+	@ResponseBody
+	@RequestMapping("emp_getListByPage")
+	public Map<String, Object> getListByPage(int page,int rows){
+		//第一条数据
+		int firstResult = (page -1) * rows;
+		//总条数
+		long total = empService.getCount();
+		//查询的数据
+		List<Emp> list=empService.getListByPage(firstResult, rows);
+		//{total: total, rows:[]}
+		Map<String, Object> mapData = new HashMap<String, Object>();
+		mapData.put("total", total);
+		mapData.put("rows", list);
+		return mapData;
+	}
+	
 	//查询用户对应的角色
 	@ResponseBody
 	@RequestMapping("emp_readEmpRoles")

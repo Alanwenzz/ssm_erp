@@ -20,5 +20,7 @@ public interface EmpService {
 	public Menu readMenusByEmpuuid(long id);
 	public List<Role> readEmpRoles(long uuid);
 	public void updateEmpRoles(long uuid, String checkedStr);
+	public long getCount();
+	public List<Emp> getListByPage(int page, int rows);
 }
 

@@ -22,4 +22,6 @@ public interface EmpMapper {
 	public List<Role> readEmpRoles(long uuid);
 	public void deleteAllErole(long uuid);
 	public void insertErole(@Param("eid")long uuid,@Param("rid")long id);
+	public long getCount();
+	public List<Emp> getListByPage(@Param("page")int page, @Param("rows")int rows);
 }

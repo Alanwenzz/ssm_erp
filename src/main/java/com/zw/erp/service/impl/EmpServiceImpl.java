@@ -143,4 +143,14 @@ public class EmpServiceImpl implements EmpService{
 		}
 	}
 
+	public long getCount() {
+		// TODO Auto-generated method stub
+		return empMapper.getCount();
+	}
+
+	public List<Emp> getListByPage(int page, int rows) {
+		// TODO Auto-generated method stub
+		return empMapper.getListByPage(page,rows);
+	}
+
 }

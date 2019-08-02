@@ -11,7 +11,7 @@
 <script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
 </head>
 <body class="easyui-layout"> 
-	<div data-options="region:'west',title:'用户列表'" style="padding:4px;width:300px;">
+	<div data-options="region:'west',title:'用户列表'" style="padding:4px;width:430px;">
 		<table id="grid"></table>
 	</div>
 	<div data-options="region:'center',title:'角色设置'" style="padding:4px">
@@ -27,11 +27,12 @@ $(function(){
 	});
 
 	$('#grid').datagrid({
-		url: 'emp_getList',
+		url: 'emp_getListByPage',
 		columns:[[
-			{field:'uuid',title:'编号',width:100},
-			{field:'name',title:'名称',width:100}
+			{field:'uuid',title:'编号',width:133},
+			{field:'name',title:'名称',width:133}
 		]],
+		pagination:true,
 		singleSelect:true,
 		onClickRow:function(rowIndex, rowData){
 			$('#tree').tree({

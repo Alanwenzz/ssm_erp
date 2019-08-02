@@ -7,8 +7,8 @@ $(function(){
 	$('#grid').datagrid({
 		url: 'emp_getList',
 		columns:[[
-			{field:'uuid',title:'编号',width:100},
-			{field:'name',title:'名称',width:100}
+			{field:'uuid',title:'编号',width:200},
+			{field:'name',title:'名称',width:200}
 		]],
 		singleSelect:true,
 		onClickRow:function(rowIndex, rowData){
