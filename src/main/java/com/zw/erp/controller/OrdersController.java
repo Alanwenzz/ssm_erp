@@ -76,7 +76,7 @@ public class OrdersController {
 		//第一条数据
 		int firstResult = (page -1) * rows;
 		//总条数
-		long total = ordersService.getCount();
+		long total = ordersService.getCount(state,type);
 		//查询的数据
 		List<Orders> list=ordersService.getList(state,type,firstResult, rows);
 		//{total: total, rows:[]}

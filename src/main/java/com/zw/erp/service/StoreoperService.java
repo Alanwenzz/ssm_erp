@@ -8,4 +8,6 @@ public interface StoreoperService {
 	public void update(Storeoper storeoper);
 	public List<Storeoper> findByCondition(Storeoper storeoper);
 	public Storeoper get(long uuid);
+	public long getCount();
+	public List<Storeoper> getListByPage(int firstResult, int rows);
 }

@@ -1,7 +1,7 @@
 $(function(){
 	//列表
 	$('#grid').datagrid({
-		url:'storedetail_listByPage',
+		url:'storedetail_getList',
 		columns:[[
 		  		    {field:'uuid',title:'编号',width:100},
 		  		    {field:'storeName',title:'仓库',width:100},

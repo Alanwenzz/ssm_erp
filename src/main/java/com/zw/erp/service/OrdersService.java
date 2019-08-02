@@ -10,7 +10,7 @@ public interface OrdersService {
 
 	void add(Orders orders);
 
-	long getCount();
+	long getCount(String state,String type);
 
 	void doCheck(long oid, long uid,String name);
 

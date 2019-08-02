@@ -37,5 +37,15 @@ public class StoreoperServiceImpl implements StoreoperService{
 		// TODO Auto-generated method stub
 		return storeoperMapper.get(uuid);
 	}
+
+	public long getCount() {
+		// TODO Auto-generated method stub
+		return storeoperMapper.getCount();
+	}
+
+	public List<Storeoper> getListByPage(int firstResult, int rows) {
+		// TODO Auto-generated method stub
+		return storeoperMapper.getListByPage(firstResult,rows);
+	}
 	
 }

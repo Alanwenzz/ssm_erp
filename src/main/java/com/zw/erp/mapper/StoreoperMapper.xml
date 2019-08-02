@@ -7,6 +7,19 @@
         select * from storeoper where uuid = #{uuid}
     </select>
     
+    <!-- 获取所有数据数量 -->
+    <select id="getCount" resultType="long"> 
+        SELECT count(*) from storeoper
+    </select>
+    
+    <!-- 分页查询所有 -->
+    <select id="getListByPage" resultType="Storeoper" > 
+        select * from storeoper
+        <if test="page!=null and rows!=null">
+			limit #{page},#{rows}
+		</if>
+    </select>
+    
     <!-- 根据条件查找用户信息 -->
     <select id="findByCondition" resultType="Storeoper" > 
         select * from storeoper where 1=1

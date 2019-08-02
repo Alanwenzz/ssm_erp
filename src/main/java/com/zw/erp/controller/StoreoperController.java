@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.zw.erp.pojo.Storeoper;
 import com.zw.erp.service.StoreoperService;
 
@@ -79,10 +78,19 @@ public class StoreoperController {
 	
 	//查询
 	@ResponseBody
-	@RequestMapping("storeoper_getList")
-	public List<Storeoper> getList(Storeoper storeoper){
-		List<Storeoper> ld=storeoperService.findByCondition(storeoper);
-		return ld;
+	@RequestMapping("storeoper_listByPage")
+	public Map<String, Object> listByPage(int page,int rows){
+		//第一条数据
+		int firstResult = (page -1) * rows;
+		//总条数
+		long total =storeoperService.getCount();
+		//查询的数据
+		List<Storeoper> list=storeoperService.getListByPage(firstResult, rows);
+		//{total: total, rows:[]}
+		Map<String, Object> mapData = new HashMap<String, Object>();
+		mapData.put("total", total);
+		mapData.put("rows", list);
+		return mapData;
 	}
 	
 	//ajax返回

@@ -12,5 +12,5 @@ public interface OrdersMapper {
 	public void delete(long uuid);
 	public void update(Orders orders);
 	public Orders get(long uuid);
-	public long getCount();
+	public long getCount(@Param("state")String state,@Param("type")String type);
 }

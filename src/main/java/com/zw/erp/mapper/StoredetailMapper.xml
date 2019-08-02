@@ -7,6 +7,11 @@
         select * from storedetail where uuid = #{uuid}
     </select>
     
+    <!-- 获取库存预警列表 -->
+    <select id="getStorealertList" resultType="Storealert" > 
+        SELECT * FROM view_storealert
+    </select>
+    
     <!-- 根据条件查找用户信息 -->
     <select id="findByCondition" resultType="Storedetail" > 
         select * from storedetail where 1=1

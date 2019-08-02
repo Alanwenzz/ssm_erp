@@ -56,7 +56,11 @@
     
     <!-- 获取所有数据数量 -->
     <select id="getCount" resultType="long"> 
-        SELECT count(*) from orders
+        SELECT count(*) from orders where type=#{type}
+        <if test="state!=null">
+			and state=#{state}
+		</if>
+        
     </select>
     
 	<!-- 添加用户信息 -->

@@ -57,9 +57,9 @@ public class OrdersServiceImpl implements OrdersService{
 		}
 	}
 
-	public long getCount() {
+	public long getCount(String state,String type) {
 		// TODO Auto-generated method stub
-		return ordersMapper.getCount();
+		return ordersMapper.getCount(state,type);
 	}
 
 	public void doCheck(long oid, long uid,String name) {
