@@ -25,4 +25,18 @@ public class StorealertController {
 	public List<Storealert> storealertList(){
 		return storealertService.getStorealertList();
 	}
+	
+	//·¢ËÍÓÊ¼þ
+	@RequestMapping("storedetail_sendStorealerMail")
+	@ResponseBody
+	public int sendStorealerMail() {
+		try {
+			storealertService.sendStorealertMail();
+			return 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 1;
+		}
+	}
 }

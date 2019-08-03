@@ -19,7 +19,8 @@ $(function(){
 					type:'post',
 					dataType:'json',
 					success:function(rtn){
-						$.messager.alert('提示',rtn.message,'info');
+						if(rtn==0)
+						$.messager.alert('提示','发送成功','info');
 					}
 				});
 			}

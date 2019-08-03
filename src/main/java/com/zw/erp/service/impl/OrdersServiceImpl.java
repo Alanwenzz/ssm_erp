@@ -2,6 +2,7 @@ package com.zw.erp.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.math.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +34,16 @@ public class OrdersServiceImpl implements OrdersService{
 		
 		// 合计金额
 		double total = 0;
+		BigDecimal t = new BigDecimal(Double.toString(total));
 		
 		//累计金额
 		for(Orderdetail detail : orders.getOrderDetails()){
-			total += detail.getMoney();
+			BigDecimal s = new BigDecimal(Double.toString(detail.getMoney()));
+			t=t.add(s);
 		}
 		
 		//设置订单总金额
-		orders.setTotalmoney(total);
+		orders.setTotalmoney(t.doubleValue());
 		
 		//订单保存到db
 		ordersMapper.insert(orders);
@@ -53,7 +56,6 @@ public class OrdersServiceImpl implements OrdersService{
 			detail.setOrders_uuid(orders.getUuid());
 			//订单条目保存到db
 			orderdetailMapper.insert(detail);
-			System.out.println(1);
 		}
 	}
 

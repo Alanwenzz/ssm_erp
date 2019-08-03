@@ -85,6 +85,7 @@ public class StoredetailController {
 		return ld;
 	}
 	
+	
 	//ajax返回
 	public Map<String, Object> ajaxReturn(boolean success,String message){
 		Map<String, Object> rtn = new HashMap<String, Object>();

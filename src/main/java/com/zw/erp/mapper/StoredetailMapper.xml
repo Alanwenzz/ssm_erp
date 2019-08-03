@@ -9,7 +9,16 @@
     
     <!-- 获取库存预警列表 -->
     <select id="getStorealertList" resultType="Storealert" > 
-        SELECT * FROM view_storealert
+        SELECT a.uuid,a.name,a.storenum,b.outnum from(
+			SELECT g.uuid,g.`name`,ifnull(sum(s.num),0) storenum 
+			from goods g LEFT JOIN storedetail s on g.uuid=s.goodsuuid
+			GROUP BY g.uuid,g.`name`
+		)a,(
+			SELECT od.goodsuuid,SUM(od.num) outnum FROM orderdetail od,orders o where od.orders_uuid=o.uuid
+			and o.type='2' and od.state='0'
+			GROUP BY od.goodsuuid
+		)b
+		where a.uuid=b.goodsuuid and a.storenum &lt; b.outnum
     </select>
     
     <!-- 根据条件查找用户信息 -->

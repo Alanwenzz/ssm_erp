@@ -138,7 +138,7 @@ $(function(){
 	    panelWidth:700,
 	    idField:'uuid',    
 	    textField:'name',    
-	    url:'supplier_getList?type=1',    
+	    url:'supplier_getList?type=' + Request['type'],    
 	    columns:[[    
 			{field:'uuid',title:'编号',width:100},
 			{field:'name',title:'名称',width:100},
@@ -233,7 +233,7 @@ function sum(){
 		panelWidth:700,
 		idField:'uuid',
 		textField:'name',
-		url:'supplier_getList?type=1',
+		url:'supplier_getList?type='+ Request['type'],
 		columns:[[
   		    {field:'uuid',title:'编号',width:100},
   		    {field:'name',title:'名称',width:100},
