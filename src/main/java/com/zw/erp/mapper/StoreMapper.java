@@ -9,4 +9,6 @@ public interface StoreMapper {
 	public void delete(long uuid);
 	public void update(Store store);
 	public Store get(long uuid);
+	public List<Store> getListAll();
+	public Store getStore(long uuid);
 }

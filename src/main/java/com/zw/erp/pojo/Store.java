@@ -8,7 +8,8 @@ public class Store {
 
 	private Long uuid;//编号
 	private String name;//名称
-	private Long empuuid;//员工编号
+	private long empuuid;//员工
+	private Emp emp;
 
 	public Long getUuid() {		
 		return uuid;
@@ -23,11 +24,21 @@ public class Store {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Long getEmpuuid() {		
+
+	public long getEmpuuid() {
 		return empuuid;
 	}
-	public void setEmpuuid(Long empuuid) {
+
+	public void setEmpuuid(long empuuid) {
 		this.empuuid = empuuid;
+	}
+
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
 	}
 
 }

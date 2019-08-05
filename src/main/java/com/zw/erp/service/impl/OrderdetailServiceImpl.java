@@ -84,7 +84,7 @@ public class OrderdetailServiceImpl implements OrderdetailService{
 		//1. 构建查询的条件
 		Storedetail storedetail = new Storedetail();
 		//获取仓库名称
-		Store store=storeMapper.get(storeuuid);
+		Store store=storeMapper.getStore(storeuuid);
 		storedetail.setStoreName(store.getName());
 		
 		storedetail.setGoodsName(detail.getGoodsname());

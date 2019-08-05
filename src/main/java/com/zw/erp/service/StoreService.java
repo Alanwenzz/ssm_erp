@@ -8,4 +8,5 @@ public interface StoreService {
 	public void update(Store store);
 	public List<Store> findByCondition(Store store);
 	public Store get(long uuid);
+	public List<Store> getListAll();
 }

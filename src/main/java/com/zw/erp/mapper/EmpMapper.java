@@ -24,4 +24,5 @@ public interface EmpMapper {
 	public void insertErole(@Param("eid")long uuid,@Param("rid")long id);
 	public long getCount();
 	public List<Emp> getListByPage(@Param("page")int page, @Param("rows")int rows);
+	public List<Emp> getStoreEmp();
 }

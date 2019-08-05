@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zw.erp.mapper.StoreMapper">
+	 <resultMap type="Store" id="storeBean">
+        <id column="uuid" property="uuid" />
+        <result column="name" property="name" />
+ 		<result column="empuuid" property="empuuid" />
+        <!-- 多对一的关系 -->
+        <!-- property: 指的是属性名称, javaType：指的是属性的类型 -->
+        <association property="emp" javaType="Emp">
+            <id column="eid" property="uuid"/>
+            <result column="ename" property="name"/>
+        </association>
+    </resultMap>
     
     <!-- 根据Id查找当前用户信息 -->
-    <select id="get" resultType="Store" > 
-        select * from store where uuid = #{uuid}
+    <select id="get" resultMap="storeBean" > 
+        select s.*,e.uuid 'eid',e.name 'ename' from store s,emp e where s.empuuid=e.uuid and s.uuid=#{uuid}
     </select>
     
+     <!-- 根据Id查找当前用户信息 -->
+    <select id="getStore" resultType="Store" > 
+        select * from store where uuid=#{uuid}
+    </select>
+    
+    
     <!-- 根据条件查找用户信息 -->
-    <select id="findByCondition" resultType="Store" > 
-        select * from store where 1=1
+    <select id="findByCondition" resultMap="storeBean" > 
+        select s.*,e.uuid 'eid',e.name 'ename' from store s,emp e where s.empuuid=e.uuid and 1=1
+    </select>
+    
+    <!-- 查找所有仓库 -->
+    <select id="getListAll" resultType="Store" > 
+        select * from store
     </select>
     
 	<!-- 添加用户信息 -->

@@ -153,4 +153,9 @@ public class EmpServiceImpl implements EmpService{
 		return empMapper.getListByPage(page,rows);
 	}
 
+	public List<Emp> getStoreEmp() {
+		// TODO Auto-generated method stub
+		return empMapper.getStoreEmp();
+	}
+
 }

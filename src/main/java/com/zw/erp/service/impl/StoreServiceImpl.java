@@ -37,5 +37,14 @@ public class StoreServiceImpl implements StoreService{
 		// TODO Auto-generated method stub
 		return storeMapper.get(uuid);
 	}
+
+	public List<Store> getListAll() {
+		// TODO Auto-generated method stub
+		return storeMapper.getListAll();
+	}
+	
+	public Store getStore(long uuid) {
+		return storeMapper.getStore(uuid);
+	}
 	
 }

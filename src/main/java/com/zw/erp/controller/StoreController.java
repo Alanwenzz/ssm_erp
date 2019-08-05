@@ -77,6 +77,14 @@ public class StoreController {
 		return store;
 	}
 	
+	//根据id查询部门信息
+	@ResponseBody
+	@RequestMapping("store_getListAll")
+	public List<Store> getListAll(){
+		List<Store> store=storeService.getListAll();
+		return store;
+	}
+	
 	//查询
 	@ResponseBody
 	@RequestMapping("store_getList")

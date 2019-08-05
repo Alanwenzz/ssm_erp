@@ -44,6 +44,11 @@ $(function(){
 	$('#loginOut').bind('click',function(){
 		$.ajax({
 			url: 'login_loginOut',
+			success:function(rtn){
+				if(rtn*0==0){
+					location.href="login";
+				}
+			}
 		});
 	});
 	
@@ -200,7 +205,7 @@ function addTab(subtitle,url,icon){
 
 function createFrame(url)
 {
-	var s = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+	var s = '<iframe align="middle" scrolling="auto" frameborder="0"  src="'+url+'" style="width:99%;height:100%;"></iframe>';
 	return s;
 }
 

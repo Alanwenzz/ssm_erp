@@ -89,9 +89,15 @@ public class LoginController {
 	
 	//ÍË³öÏú»Ùsession
 	@RequestMapping("login_loginOut")
-	public String loginOut(){
-		httpSession.invalidate();
-		return "login";
+	@ResponseBody
+	public int loginOut(){
+		try {
+			httpSession.invalidate();
+			return 0;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+		return 1;
 	}
 
 	

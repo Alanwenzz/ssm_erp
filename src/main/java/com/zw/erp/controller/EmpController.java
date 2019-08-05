@@ -143,6 +143,13 @@ public class EmpController {
 		}
 	}
 	
+	//查询库管员
+	@ResponseBody
+	@RequestMapping("getStoreEmp")
+	public List<Emp> getStoreEmp(){
+		return empService.getStoreEmp();
+	}
+	
 	//ajax返回
 	public Map<String, Object> ajaxReturn(boolean success,String message){
 		Map<String, Object> rtn = new HashMap<String, Object>();

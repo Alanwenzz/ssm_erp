@@ -2,59 +2,275 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>仓库管理</title>
-<link rel="stylesheet" type="text/css" href="ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="ui/themes/icon.css">
-<script type="text/javascript" src="ui/jquery.min.js"></script>
-<script type="text/javascript" src="ui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
-<script type="text/javascript" src="js/crud.js"></script>
-<script type="text/javascript">
-	var name="store";
-	var columns=[[
-	  		    {field:'uuid',title:'编号',width:100},
-	  		    {field:'name',title:'名称',width:100},
-	  		    {field:'empuuid',title:'员工编号',width:100},
+<title>Insert title here</title>
 
-				{field:'-',title:'操作',width:200,formatter: function(value,row,index){
-					var oper = "<a href=\"javascript:void(0)\" onclick=\"edit(" + row.uuid + ')">修改</a>';
-					oper += ' <a href="javascript:void(0)" onclick="del(' + row.uuid + ')">删除</a>';
-					return oper;
-				}}
-				]];
-
-</script>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/all.css" />
+<link href="css/bootstrap-table.min.css" rel="stylesheet">
+<style>
+	#add_btn,.buttons-toolbar{margin-top:5px;}
+</style>
 </head>
 <body>
-<div class="easyui-panel" style="padding-left:4px;border-bottom:0px;">
-	<div style="height:2px;"></div>
-	<form id="searchForm">
-			名称：<input name="t1.name" >
-	员工编号：<input name="t1.empuuid" >
+	<!-- 按钮工具栏 -->
+	<div class="buttons-toolbar"></div>
+	
+	<!-- 打开添加窗口 -->
+	<div id="toolbar">
+	  <button id="add_btn" class="btn btn-primary btn-lg" onclick="add()" data-toggle="modal" data-target="#modalTable">
+	    <i class="glyphicon glyphicon-remove"></i> Add
+	  </button>
+	</div>
 
-		<button type="button" id="btnSearch">查询</button>
-	</form>
-	<div style="height:2px;"></div>
-</div>
-<table id="grid"></table>
+	<!-- 编辑窗口 -->
+	<div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form id="save_form">
+	          	<p class="text-muted">仓库名称:</p>
+	          	<input type="text" name="name" id="name" class="form-control" value=""><br/>
+	          	
+	          	<!-- 下拉列表 -->
+	         	<p class="text-muted">库管员:</p>
+	         	<select  id="emp" class="form-control" name="empuuid" style="background-color:#A2D9D1;color:#2A0340">
+	         		<option value="0">--请选择库管员--</option>                      
+				</select>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="save_btn" data-toggle="modal" data-target="#modalTable3" class="btn btn-secondary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 删除窗口 -->
+	<div id="modalTable2" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	  <span class="text-danger" style="font:20px">确定要删除吗?</span>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="button" id="yes_btn" onclick="yes_delete()" data-toggle="modal" data-target="#modalTable3" class="btn btn-info" data-dismiss="modal">确定</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" >取消</button>       
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 回弹窗口 -->
+	<div id="modalTable3" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	  <span id="info" class="text-info" style="font:20px"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" data-dismiss="modal" class="btn btn-info">确定</button>       
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 主表格 -->	
+	<table data-toolbar="#toolbar"
+		  data-search="true"
+		  data-show-refresh="true"
+		  data-show-toggle="true"
+		  data-show-fullscreen="true"
+		  data-show-columns="true"
+		  data-show-export="true"
+		  data-click-to-select="true"
+		  data-minimum-count-columns="2"
+		  data-show-pagination-switch="true"
+		  data-pagination="true"
+  		  data-buttons-toolbar=".buttons-toolbar" id="table">
+  	</table>	
+	
+	
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.serializejson.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+ 	<script src="js/bootstrap-table.min.js"></script>
+ 	<script src="js/bootstrap-table-zh-CN.min.js"></script>
 
-<div id="editDlg">
-	<form id="editForm">
-			<input name="t.uuid" type="hidden"> 
+		
+	<script>
+	    var method="";
 
-		<table>
-						<tr>
-				<td>名称</td><td><input name="t.name"> </td>
-			</tr>
-			<tr>
-				<td>员工编号</td><td><input name="t.empuuid"> </td>
-			</tr>
-
-		</table>
-		<button id="btnSave" type="button">保存</button>
-	</form>
-</div>
-
+		$('#table').bootstrapTable({
+		  url: 'store_getList',
+		  striped : true, //是否显示行间隔色
+		  pageNumber : 1, //初始化加载第一页
+		  pagination : true,//是否分页
+		  sidePagination : 'client',//server:服务器端分页|client：前端分页
+		  pageSize : 5,//单页记录数
+		  pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+		  showRefresh : true,//刷新按钮
+		  columns: [{
+		    field: 'uuid',
+		    title: '编号',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  }, {
+		    field: 'name',
+		    title: '仓库名称',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle'
+		  }, {
+		    field: 'emp',
+		    title: '库管员',
+		    sortable:"true",
+		    align: 'center',
+	        valign: 'middle',
+	        formatter:function(value){
+  		    	return value.name;
+  		    }
+		  },{
+		    field: '-',
+		    title:'操作',width:200,formatter: function(value,row,index){
+				var oper = "<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#modalTable\" href=\"javascript:void(0)\" onclick=\"edit(" + row.uuid + ")\">修改</button>";
+				oper += "&nbsp;<button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#modalTable2\" href=\"javascript:void(0)\" onclick=\"del(" + row.uuid + ")\">删除</button>";
+				return oper;
+		    }
+		  }]
+		})
+		
+		$.ajax({  
+            url : "getStoreEmp", //所需要的列表接口地址  
+            type : "post",  
+            dataType : "json",  
+            success : function(result) { 
+            	 var h = "";  
+                 $.each(result, function(index, value) {
+                     h += "<option value='" + value.uuid + "'>" + value.name //下拉框序言的循环数据
+                     + "</option>";
+                 });
+                 $("#emp").append(h);//append 添加进去并展示  
+            }
+        })
+	</script>	
+	<script>
+		var $save_form = $('#save_form')
+		var $table = $('#table')
+		var $save_btn = $('#save_btn')
+		//获取表单元素
+		var $name=$('#name')
+		var $emp=$('#emp')
+		
+		//添加
+		function add(){
+			//设置保存按钮提交的方法为add
+			method="add";
+			$name.val("");
+			$emp.find("option:selected")[0].selected=false;
+		}
+		
+		//修改
+		function edit(eid){
+			//设置保存按钮提交的方法为update
+			method="update?uuid="+eid;
+		
+			//加载数据
+			$.ajax({
+				url: 'store_'+'get?uuid=' + eid,
+				dataType: 'json',
+				type: 'post',
+				success:function(rtn){
+					$name.val(rtn.name);
+					$emp.find("option:selected")[0].selected=false;
+					$emp.find("option[value="+rtn.emp.uuid+"]").attr("selected",true);
+				}
+			})
+		}
+		
+		//保存
+		$(function() {
+		    $save_btn.click(function () {
+		    	//将表单内容序列化为JSON对象
+		    	var formData = $save_form.serializeJSON();
+		    	$.ajax({
+					url: 'store_'+method,
+					data: formData,
+					dataType: 'json',
+					type: 'post',
+					success:function(rtn){
+						if(rtn.success){
+				            $("#info").text("保存成功");	
+						}else{
+							$("#info").text("保存失败");
+						}
+						$table.bootstrapTable('refresh');
+					}
+				})
+		    })
+		})
+		
+		//修改删除方法
+		function del(eid){ 
+			method='store_delete?uuid=' + eid;			
+		}
+		
+		//删除
+		function yes_delete(){
+			$.ajax({
+				url: method,
+				dataType: 'json',
+				type: 'post',
+				success:function(rtn){
+					if(rtn.success){
+			            $("#info").text("删除成功");	
+					}else{
+						$("#info").text("删除失败");
+					}
+					$table.bootstrapTable('refresh');
+				}
+			});
+		}
+		
+		//打开编辑模态窗
+		$(function() {
+	    	$('#modalTable').on('shown.bs.modal', function () {
+	        	$save_form.bootstrapTable('resetView');
+    	})
+	})
+    	
+    	//打开删除模态窗
+		$(function() {
+	    	$('#modalTable2').on('shown.bs.modal', function () {
+	        	$save_form.bootstrapTable('resetView');
+    	})
+  })
+		
+		//打开回调信息模态窗
+		$(function() {
+		  	$('#modalTable3').on('shown.bs.modal', function () {
+		      	$save_form.bootstrapTable('resetView');
+		})
+	})
+</script>
 </body>
 </html>

@@ -103,4 +103,9 @@
         insert into emp_role(emp_uuid,roles_uuid) 
         values(#{eid},#{rid});
     </insert>
+    
+    <!-- 查找库管员 -->
+    <select id="getStoreEmp" resultType="Emp">
+    	select e.* from emp e,emp_role er where e.uuid=er.emp_uuid and er.roles_uuid=8
+    </select>
 </mapper>

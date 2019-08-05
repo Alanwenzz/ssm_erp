@@ -22,5 +22,6 @@ public interface EmpService {
 	public void updateEmpRoles(long uuid, String checkedStr);
 	public long getCount();
 	public List<Emp> getListByPage(int page, int rows);
+	public List<Emp> getStoreEmp();
 }
 
