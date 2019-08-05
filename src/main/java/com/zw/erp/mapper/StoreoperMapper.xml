@@ -9,12 +9,54 @@
     
     <!-- 获取所有数据数量 -->
     <select id="getCount" resultType="long"> 
-        SELECT count(*) from storeoper
+        SELECT count(*) from storeoper where 1=1
+        
+        <if test="so!=null">
+        	<if test="so.empuuid!=null">
+        		and empuuid =#{so.empuuid}
+        	</if>        	
+        	<if test="so.storeuuid!=null">
+        		and storeuuid =#{so.storeuuid}
+        	</if>
+        	<if test="so.goodsuuid!=null">
+        		and goodsuuid =#{so.goodsuuid}
+        	</if>
+        	<if test="so.type!=null and so.type!=''">
+        		and type =#{so.type}
+        	</if>
+        	<if test="so.opertime!=null">
+        		and opertime &gt; #{so.opertime}
+        	</if>     	
+        </if>
+        <if test="ot!=null">
+        		and opertime &lt; #{ot}
+        </if>
     </select>
     
     <!-- 分页查询所有 -->
     <select id="getListByPage" resultType="Storeoper" > 
-        select * from storeoper
+        select * from storeoper where 1=1
+        
+        <if test="so!=null">
+        	<if test="so.empuuid!=null">
+        		and empuuid =#{so.empuuid}
+        	</if>        	
+        	<if test="so.storeuuid!=null">
+        		and storeuuid =#{so.storeuuid}
+        	</if>
+        	<if test="so.goodsuuid!=null">
+        		and goodsuuid =#{so.goodsuuid}
+        	</if>
+        	<if test="so.type!=null and so.type!=''">
+        		and type =#{so.type}
+        	</if>
+        	<if test="so.opertime!=null">
+        		and opertime &gt; #{so.opertime}
+        	</if>     	
+        </if>
+        <if test="ot!=null">
+        		and opertime &lt; #{ot}
+        </if>
         <if test="page!=null and rows!=null">
 			limit #{page},#{rows}
 		</if>

@@ -1,5 +1,7 @@
 package com.zw.erp.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * 仓库操作记录实体类
  * @author Administrator *
@@ -12,6 +14,7 @@ public class Storeoper {
 	private Long uuid;//编号
 	private Long empuuid;//操作员工编号
 	private String empName;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private java.util.Date opertime;//操作日期
 	private Long storeuuid;//仓库编号
 	private String storeName;

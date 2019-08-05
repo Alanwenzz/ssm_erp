@@ -1,5 +1,6 @@
 package com.zw.erp.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,14 @@ public class StoreoperServiceImpl implements StoreoperService{
 		return storeoperMapper.get(uuid);
 	}
 
-	public long getCount() {
+	public long getCount(Storeoper storeoper,Date opertime2) {
 		// TODO Auto-generated method stub
-		return storeoperMapper.getCount();
+		return storeoperMapper.getCount(storeoper,opertime2);
 	}
 
-	public List<Storeoper> getListByPage(int firstResult, int rows) {
+	public List<Storeoper> getListByPage(Storeoper storeoper,Date opertime2,int firstResult, int rows) {
 		// TODO Auto-generated method stub
-		return storeoperMapper.getListByPage(firstResult,rows);
+		return storeoperMapper.getListByPage(storeoper,opertime2,firstResult,rows);
 	}
 	
 }

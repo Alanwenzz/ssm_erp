@@ -31,5 +31,5 @@ $(function(){
 })
 
 function formatDate(value){
-	return new Date(value).Format('yyyy-MM-dd hh:mm:ss');
+	return new Date(value).Format('yyyy-MM-dd');
 }

@@ -1,5 +1,6 @@
 package com.zw.erp.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -12,6 +13,6 @@ public interface StoreoperMapper {
 	public void delete(long uuid);
 	public void update(Storeoper storeoper);
 	public Storeoper get(long uuid);
-	public long getCount();
-	public List<Storeoper> getListByPage(@Param("page")int firstResult, @Param("rows")int rows);
+	public long getCount(@Param("so")Storeoper storeoper,@Param("ot")Date opertime2);
+	public List<Storeoper> getListByPage(@Param("so")Storeoper storeoper,@Param("ot")Date opertime2,@Param("page")int firstResult, @Param("rows")int rows);
 }

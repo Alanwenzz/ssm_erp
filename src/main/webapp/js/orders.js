@@ -177,7 +177,9 @@ $(function(){
  * @returns
  */
 function formatDate(value){
-	return new Date(value).Format('yyyy-MM-dd');
+	if(value!=null){
+		return new Date(value).Format('yyyy-MM-dd');
+	}
 }
 
 /**

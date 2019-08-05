@@ -1,13 +1,14 @@
 package com.zw.erp.controller;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -79,13 +80,13 @@ public class StoreoperController {
 	//查询
 	@ResponseBody
 	@RequestMapping("storeoper_listByPage")
-	public Map<String, Object> listByPage(int page,int rows){
+	public Map<String, Object> listByPage(Storeoper storeoper,@DateTimeFormat(pattern="yyyy-MM-dd")Date opertime2,int page,int rows){
 		//第一条数据
 		int firstResult = (page -1) * rows;
 		//总条数
-		long total =storeoperService.getCount();
+		long total =storeoperService.getCount(storeoper,opertime2);
 		//查询的数据
-		List<Storeoper> list=storeoperService.getListByPage(firstResult, rows);
+		List<Storeoper> list=storeoperService.getListByPage(storeoper,opertime2,firstResult, rows);
 		//{total: total, rows:[]}
 		Map<String, Object> mapData = new HashMap<String, Object>();
 		mapData.put("total", total);
